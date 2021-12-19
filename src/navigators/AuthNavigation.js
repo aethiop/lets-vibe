@@ -1,0 +1,20 @@
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import RegisterScreen from "../screens/Auth/Register";
+import LoginScreen from "../screens/Auth/Login";
+const Stack = createNativeStackNavigator();
+
+export default function AuthNavigation() {
+	console.log("here");
+	return (
+		<Stack.Navigator
+			initialRouteName="Register"
+			screenOptions={{
+				headerShown: false,
+			}}
+		>
+			<Stack.Screen name="Register" component={RegisterScreen} />
+			<Stack.Screen name="Login" component={LoginScreen} />
+		</Stack.Navigator>
+	);
+}

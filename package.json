@@ -8,13 +8,29 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
+    "@react-three/drei": "^8.3.1",
+    "@react-three/fiber": "^7.0.24",
     "expo": "~44.0.0",
+    "expo-gl": "^11.1.1",
     "expo-status-bar": "~1.2.0",
+    "expo-three": "^6.0.1",
+    "gun": "^0.2020.1235",
+    "native-base": "^3.2.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.10.1",
+    "react-native-svg": "^12.1.1",
     "react-native-web": "0.17.1",
-    "resonance-audio": "^1.0.0"
+    "react-native-webview": "^11.15.0",
+    "react-reconciler": "^0.26.2",
+    "react-three-fiber": "^6.0.13",
+    "resonance-audio": "^1.0.0",
+    "three": "^0.135.0",
+    "valtio": "^1.2.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
