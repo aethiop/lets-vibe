@@ -37,7 +37,7 @@ export default function AppNavigation() {
 					path: "/",
 				}}
 			/>
-			<MenuNav.Screen
+			{/* <MenuNav.Screen
 				name="Rooms"
 				component={RoomScreen}
 				options={{
@@ -72,7 +72,7 @@ export default function AppNavigation() {
 					title: "Task",
 					pub: keys.pub,
 				}}
-			/>
+			/> */}
 		</MenuNav.Navigator>
 	);
 }

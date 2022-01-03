@@ -35,6 +35,7 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 
 	return (
 		<NavigationContent>
+
 			<Box
 				flex={1}
 				_dark={{ bg: "#121212" }}
@@ -56,7 +57,7 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 						</Container>
 					);
 				})}
-				<Box position="absolute" bottom={3} left={4}>
+				<Box safeAreaBottom position="absolute" bottom={3} left={4}>
 					<Box>
 						<Box alignItems={"flex-start"} mb={4} ml={2}>
 							<Stagger
@@ -183,13 +184,14 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 							const { key, name } = route;
 							const { options } = descriptors[key];
 							const isCurrent = i === state.index;
+							console.log(state.routes)
 							if (isCurrent) {
 								return (
 									<TransparentButton
 										key={key}
 										icon={options.icon}
 										rightIcon={
-											<Icon
+											state.routes.length > 1 ? (<Icon
 												as={
 													<Ionicons
 														name={"chevron-up"}
@@ -200,7 +202,7 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 													"#121212",
 													"white"
 												)}
-											/>
+											/>) : null
 										}
 										onPress={onToggle}
 									>

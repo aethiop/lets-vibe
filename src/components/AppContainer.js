@@ -61,7 +61,7 @@ const storage = {
 	getItem: asyncFn(idb.get.bind(idb)),
 	removeItem: asyncFn(idb.del.bind(idb)),
 };
-const peers = ["http://localhost:8765/gun"];
+const peers = ["https://marda.herokuapp.com/gun"];
 
 export default function AppContainer({ children }) {
 	return (

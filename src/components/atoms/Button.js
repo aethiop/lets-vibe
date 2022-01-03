@@ -39,6 +39,7 @@ const TransparentButton = (props) => {
 		<Button
 		borderRadius="full"
 			size="md"
+			mx={2}
 			colorScheme={colorMode}
 			variant="outline"
 			leftIcon={
