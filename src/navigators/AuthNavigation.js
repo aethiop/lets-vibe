@@ -5,7 +5,6 @@ import LoginScreen from "../screens/Auth/Login";
 const Stack = createNativeStackNavigator();
 
 export default function AuthNavigation() {
-	console.log("here");
 	return (
 		<Stack.Navigator
 			initialRouteName="Register"

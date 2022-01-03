@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { Box, View } from "native-base";
 import React, { useState } from "react";
 import { Platform } from "react-native";
 import {
@@ -13,11 +13,11 @@ import {
 import { PrimaryButton, TextButton } from "../../components/atoms/Button";
 import { TextInput } from "../../components/atoms/Input";
 import Logo from "../../components/atoms/Logo";
-import { useAuthDispatch, authUser, useAuth } from "../../contexts/auth";
+import { useAuth } from "../../hooks/useGun";
+
 export default function Login({ navigation }) {
 	const [key, setKey] = useState("");
-	const user = useAuth();
-	const dispatch = useAuthDispatch();
+	const { login } = useAuth();
 	return (
 		<KeyboardAvoidingView style={{ flex: 1 }}>
 			<Center _dark={{ bg: "#121212" }} flex={1} py={10}>
@@ -31,12 +31,18 @@ export default function Login({ navigation }) {
 						placeholder="Paste your key"
 						icon="finger-print"
 					/>
-					<PrimaryButton
-						onPress={() => authUser(dispatch, { key: key })}
-						isLoading={user.loading}
-					>
-						Login
-					</PrimaryButton>
+					<Box w="auto">
+						<PrimaryButton
+							colorScheme={"primary"}
+							icon={"enter-outline"}
+							onPress={() =>
+								login(key === "string" ? key : JSON.parse(key))
+							}
+						>
+							Login
+						</PrimaryButton>
+					</Box>
+
 					<TextButton
 						onPress={() => navigation.navigate("Register")}
 						variant="ghost"

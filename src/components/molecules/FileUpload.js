@@ -27,7 +27,7 @@ export const FileUpload = ({ isOpen, currentPath, hideModal }) => {
 				fileNode.get("status").put("uploaded");
 				fileNode.get("progress").put(0);
 				hideModal();
-				
+				setFileSelected(null);
 			}
 		});
 	};

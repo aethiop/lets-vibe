@@ -60,4 +60,4 @@ const colors = {
 	},
 };
 
-export default extendTheme({ config, colors });
+export default extendTheme({ config, colors, fonts, fontConfig });

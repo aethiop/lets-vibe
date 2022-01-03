@@ -1,17 +1,66 @@
 import React from "react";
-import { Button } from "native-base";
+import {
+	Button,
+	IconButton as IB,
+	Icon,
+	useColorModeValue,
+	useColorMode,
+	Text,
+} from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 
 const PrimaryButton = (props) => {
+	const { colorMode } = useColorMode();
 	return (
-		<Button borderRadius={14} size="md" px={12} py={3} w="full" {...props}>
-			{props.children}
+		<Button
+			borderRadius="full"
+			size="md"
+			leftIcon={
+				<Icon
+					as={<Ionicons name={props.icon} />}
+					size="sm"
+					color={"white"}
+				/>
+			}
+			colorScheme={colorMode === "dark" ? "light" : "dark"}
+			py={3}
+			{...props}
+		>
+			<Text px={2} fontWeight={"bold"} color="white">
+				{props.children}
+			</Text>
+		</Button>
+	);
+};
+
+const TransparentButton = (props) => {
+	const { colorMode } = useColorMode();
+	return (
+		<Button
+		borderRadius="full"
+			size="md"
+			colorScheme={colorMode}
+			variant="outline"
+			leftIcon={
+				<Icon
+					as={<Ionicons name={props.icon} />}
+					size="sm"
+					color={useColorModeValue("#121212", "white")}
+				/>
+			}
+			py={3}
+			{...props}
+		>
+			<Text px={2} fontWeight={"bold"} >
+				{props.children}
+			</Text>
 		</Button>
 	);
 };
 const TextButton = (props) => {
 	return (
 		<Button
-			borderRadius={14}
+			borderRadius="full"
 			size="md"
 			px={12}
 			py={3}
@@ -22,4 +71,19 @@ const TextButton = (props) => {
 		</Button>
 	);
 };
-export { PrimaryButton, TextButton };
+const IconButton = (props) => {
+	return (
+		<IB
+			{...props}
+			colorScheme={props.colorScheme || "white"}
+			borderRadius={"full"}
+			icon={
+				<Icon
+					as={<Ionicons name={props.icon} />}
+					size="sm"
+				/>
+			}
+		/>
+	);
+};
+export { PrimaryButton, TextButton, IconButton, TransparentButton };

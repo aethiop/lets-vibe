@@ -14,13 +14,15 @@ import {
 import { PrimaryButton, TextButton } from "../../components/atoms/Button";
 import { TextInput } from "../../components/atoms/Input";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useAuthDispatch, createUser, useAuth } from "../../contexts/auth";
+// import { useAuthDispatch, createUser, useAuth } from "../../contexts/auth";
 import Logo from "../../components/atoms/Logo";
+import { useAuth } from "../../hooks/useGun";
 
 export default function RegisterScreen({ navigation }) {
-	const [username, setUsername] = useState("");
-	const user = useAuth();
-	const dispatch = useAuthDispatch();
+	// const [username, setUsername] = useState("");
+	const { login } = useAuth();
+	// const user = useAuth();
+	// const dispatch = useAuthDispatch();
 	return (
 		<KeyboardAvoidingView
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -31,19 +33,18 @@ export default function RegisterScreen({ navigation }) {
 					<Center my={5} flex={1}>
 						<Logo />
 					</Center>
-					<TextInput
+					{/* <TextInput
 						value={username}
 						onChangeText={(text) => setUsername(text)}
 						placeholder="Enter a username"
 						icon="person"
-					/>
+					/> */}
 					<PrimaryButton
-						onPress={() =>
-							createUser(dispatch, { username: username })
-						}
-						isLoading={user.loading}
+						colorScheme={"primary"}
+						icon={"qr-code"}
+						onPress={() => login()}
 					>
-						Register
+						Let's get started!
 					</PrimaryButton>
 					<TextButton
 						onPress={() => navigation.navigate("Login")}

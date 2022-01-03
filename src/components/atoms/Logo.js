@@ -10,8 +10,8 @@ export default function Logo() {
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<Rect width="75" height="75" rx="27.1978" fill="#9E77F1" />
-			<Circle cx="48.287" cy="25.9801" r="5.93158" fill="white" />
+			<Rect width="75" height="75" rx="27.1978" fill="white" />
+			<Circle cx="48.287" cy="25.9801" r="5.93158" fill="black" />
 			<Rect
 				x="19"
 				y="25.3984"
@@ -19,7 +19,7 @@ export default function Logo() {
 				height="35.5895"
 				rx="5.93158"
 				transform="rotate(-30 19 25.3984)"
-				fill="white"
+				fill="black"
 			/>
 		</Svg>
 	);
