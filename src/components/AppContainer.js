@@ -1,25 +1,30 @@
+import "react-native-get-random-values";
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeBaseProvider, StatusBar } from "native-base";
-// import { AuthProvider } from "../contexts/auth";
-// import { FileSystemProvider } from "../contexts/file";
 import Gun from "gun/gun";
-import sea from "gun/sea";
-import "gun/lib/promise"
-import "../lib/file-upload";
+import SEA from "gun/sea";
+import "gun/lib/then";
+import "gun/lib/promise";
 import "gun/lib/radix";
+import "gun/lib/open";
 import "gun/lib/radisk";
 import "gun/lib/store";
+import "gun/lib/path";
 import "gun/lib/rindexed";
+import "../lib/file-upload";
+import "../lib/friend";
 
 import * as idb from "idb-keyval";
 import { GunProvider } from "../hooks/useGun";
 import { ThemeContainer } from "./ThemeContainer";
-import { FileSystemProvider } from "../hooks/useFileSystem";
+import { CertProvider } from "../hooks/useCert";
+import { NotificationProvider } from "../hooks/useNotifications";
+import { FriendProvider } from "../hooks/useFriend";
 
 const linking = {
 	prefixes: [
 		"http://localhost:19006",
+		"http://localhost:3000",
 		"https://marda.studio",
 		"https://www.marda.studio",
 	],
@@ -30,6 +35,7 @@ const linking = {
 					Home: {
 						screens: {
 							Library: "library",
+							Chat: "chat/:room/:user",
 							Rooms: "room",
 							Notes: "notes",
 							Games: "games",
@@ -38,8 +44,10 @@ const linking = {
 					},
 					Settings: "settings",
 					Search: "search",
+					Profile: { path: "profile/:pub", exact: true },
 				},
 			},
+
 			Auth: {
 				screens: {
 					Login: "login",
@@ -61,20 +69,31 @@ const storage = {
 	getItem: asyncFn(idb.get.bind(idb)),
 	removeItem: asyncFn(idb.del.bind(idb)),
 };
-const peers = ["https://marda.herokuapp.com/gun"];
 
 export default function AppContainer({ children }) {
 	return (
 		<NavigationContainer linking={linking}>
 			<GunProvider
-				peers={peers}
-				sea={sea}
+				sea={SEA}
 				Gun={Gun}
 				keyFieldName="vibeKeys"
 				storage={storage}
-				gunOpts={{ localStorage: false, radisk: true, peers }}
+				gunOpts={{
+					peers: [
+						"https://marda.herokuapp.com/gun",
+						"http://localhost:8765/gun",
+					],
+					localStorage: false,
+					rad: false,
+				}}
 			>
-				<ThemeContainer>{children}</ThemeContainer>
+				<CertProvider>
+					<FriendProvider>
+						<NotificationProvider>
+							<ThemeContainer>{children}</ThemeContainer>
+						</NotificationProvider>
+					</FriendProvider>
+				</CertProvider>
 			</GunProvider>
 		</NavigationContainer>
 	);

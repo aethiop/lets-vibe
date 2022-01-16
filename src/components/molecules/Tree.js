@@ -34,10 +34,24 @@ export const Tree = (props) => {
 						soul,
 						type,
 					} = item;
-					console.log(item);
 					const icon = type === "folder" ? "folder" : "document";
-					
-					return type === "folder" ? (<Folder key={soul} soul={soul} navigation={navigation}  icon={icon} iconColor="#77A8F1" />) : (<File key={soul} soul={soul} icon={icon} iconColor="#82de8c" />)	
+
+					return type === "folder" ? (
+						<Folder
+							key={soul}
+							soul={soul}
+							navigation={navigation}
+							icon={icon}
+							iconColor="#77A8F1"
+						/>
+					) : (
+						<File
+							key={soul}
+							soul={soul}
+							icon={icon}
+							iconColor="#82de8c"
+						/>
+					);
 				})}
 			</SimpleGrid>
 		</>

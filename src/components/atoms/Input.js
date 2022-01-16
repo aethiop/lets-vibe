@@ -10,14 +10,14 @@ const TextInput = (props) => {
 			fontWeight={600}
 			size="md"
 			py={2}
-			px={3}
+			px={5}
 			placeholderTextColor={useColorModeValue("light.400", "dark.400")}
-			variant="filled"
+			variant="outline"
 			bg={useColorModeValue("light.300", "dark.200")}
 			InputLeftElement={
 				<Icon
 					as={<Ionicons name={props.icon} />}
-					size={5}
+					size="sm"
 					px={3}
 					color={useColorModeValue("light.400", "dark.400")}
 				/>

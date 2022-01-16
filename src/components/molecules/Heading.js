@@ -1,10 +1,19 @@
 import React from "react";
-import { Text, HStack, StatusBar, Pressable } from "native-base";
+import {
+	Text,
+	HStack,
+	StatusBar,
+	Pressable,
+	Box,
+	useColorModeValue,
+} from "native-base";
 import { IconButton } from "../atoms/Button";
 import { Identity } from "../atoms/Identity";
+import { useAuth, useGunSetState } from "../../hooks/useGun";
 
 export const Heading = (props) => {
-	const { name, publicKey, navigation } = props;
+	const { name, publicKey, notifications, navigation } = props;
+
 	return (
 		<>
 			<StatusBar backgroundColor="primary.500" barStyle="light-content" />
@@ -27,8 +36,30 @@ export const Heading = (props) => {
 						onPress={() => navigation.navigate("Search")}
 						icon="search-outline"
 					/>
-					<IconButton icon="people-outline" />
-					<IconButton icon="notifications-outline" />
+					<IconButton
+						icon="people-outline"
+						onPress={() => navigation.navigate("Friends")}
+					/>
+					<Box>
+						<IconButton
+							icon="notifications-outline"
+							onPress={() => navigation.navigate("Notifications")}
+						/>
+						{notifications && notifications.length > 0 && (
+							<Text
+								position="absolute"
+								top="0"
+								right="0"
+								bg="red.500"
+								px={1.5}
+								rounded="full"
+								color={useColorModeValue("white", "black")}
+								fontSize="xs"
+							>
+								{notifications.length}
+							</Text>
+						)}
+					</Box>
 				</HStack>
 			</HStack>
 		</>

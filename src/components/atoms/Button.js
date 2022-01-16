@@ -37,7 +37,7 @@ const TransparentButton = (props) => {
 	const { colorMode } = useColorMode();
 	return (
 		<Button
-		borderRadius="full"
+			borderRadius="full"
 			size="md"
 			mx={2}
 			colorScheme={colorMode}
@@ -52,7 +52,7 @@ const TransparentButton = (props) => {
 			py={3}
 			{...props}
 		>
-			<Text px={2} fontWeight={"bold"} >
+			<Text px={2} fontWeight={"bold"}>
 				{props.children}
 			</Text>
 		</Button>
@@ -82,6 +82,7 @@ const IconButton = (props) => {
 				<Icon
 					as={<Ionicons name={props.icon} />}
 					size="sm"
+					color={props.color}
 				/>
 			}
 		/>

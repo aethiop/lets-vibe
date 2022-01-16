@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createMenuNavigator } from "../components/organisms/MenuNavigator";
 import RoomScreen from "../screens/App/Room/Room";
 import NotesScreen from "../screens/App/Notes/Notes";
 import GameScreen from "../screens/App/Games/Games";
 import LibraryScreen from "../screens/App/Library/Library";
 import TaskScreen from "../screens/App/Tasks/Tasks";
-import { useAuth } from "../hooks/useGun";
+import { useAuth, useGunSetState } from "../hooks/useGun";
 import { FileSystemProvider } from "../hooks/useFileSystem";
+import Chat from "../screens/App/Chat";
 
 const MenuNav = createMenuNavigator();
 const LibraryView = (props) => {
@@ -17,7 +18,22 @@ const LibraryView = (props) => {
 	);
 };
 export default function AppNavigation() {
-	const { keys } = useAuth();
+	const { user, keys } = useAuth();
+
+	// useEffect(() => {
+	// 	if (notificationList.length > 0) {
+	// 		notificationList.map((notification) => {
+	// 			console.log(notification);
+	// 			new Notification("Friend Request", {
+	// 				body:
+	// 					"You have a friend request from: " +
+	// 					notification.pub.slice(0, 8),
+	// 			});
+	// 		});
+	// 	}
+	// 	return () => {};
+	// }, [notificationList]);
+	// console.log(notificationList);
 	return (
 		<MenuNav.Navigator
 			initialRouteName="Library"
@@ -37,6 +53,7 @@ export default function AppNavigation() {
 					path: "/",
 				}}
 			/>
+
 			{/* <MenuNav.Screen
 				name="Rooms"
 				component={RoomScreen}

@@ -38,27 +38,7 @@ export default function SettingsScreen({ navigation }) {
 	});
 
 	const { name = "", themeMode } = profile;
-	useEffect(() => {
-		if (!copyPub) {
-			setInterval(() => {
-				setCopyPub(false);
-			}, 3000);
-		}
-		return () => {
-			clearInterval(() => {});
-		};
-	}, [copyPub]);
 
-	useEffect(() => {
-		if (!copyPriv) {
-			setInterval(() => {
-				setCopyPriv(false);
-			}, 3000);
-		}
-		return () => {
-			clearInterval(() => {});
-		};
-	}, [copyPriv]);
 	return (
 		<VStack space={4} _dark={{ bg: "#121212" }} w="full" h="full" flex={1}>
 			<HStack justifyContent="flex-end" py="5" px="5">
@@ -69,26 +49,36 @@ export default function SettingsScreen({ navigation }) {
 			</HStack>
 			<VStack space={4}>
 				<Center>
-					<Identity publicKey={keys.pub} size="md" />
-					{!name ? (
-						<Skeleton
-							colorMode={themeMode}
-							height={10}
-							m={2}
-							width={175}
-							startColor={useColorModeValue(
-								"light.100",
-								"#212121"
+					<Pressable
+						onPress={() =>
+							navigation.navigate("Profile", { pub: keys.pub })
+						}
+					>
+						<Center>
+							<Identity publicKey={keys.pub} size="md" />
+							{!name ? (
+								<Skeleton
+									colorMode={themeMode}
+									height={10}
+									m={2}
+									width={175}
+									startColor={useColorModeValue(
+										"light.100",
+										"#212121"
+									)}
+									endColor={useColorModeValue(
+										"light.300",
+										"#121212"
+									)}
+									borderRadius="full"
+								></Skeleton>
+							) : (
+								<Heading py={4} size="md">
+									{name}
+								</Heading>
 							)}
-							endColor={useColorModeValue("light.300", "#121212")}
-							borderRadius="full"
-						></Skeleton>
-					) : (
-						<Heading py={4} size="md">
-							{name}
-						</Heading>
-					)}
-
+						</Center>
+					</Pressable>
 					<HStack space={4} justifyContent={"center"}>
 						<PrimaryButton
 							disabled={copyPub}
@@ -208,7 +198,7 @@ export default function SettingsScreen({ navigation }) {
 					onPress={async () => {
 						logout(() => {
 							console.log("Logged out");
-							window.location.reload();
+							navigation.navigate("Auth");
 						});
 					}}
 					px="10"
