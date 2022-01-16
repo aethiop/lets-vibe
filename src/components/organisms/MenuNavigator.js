@@ -35,7 +35,6 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 
 	return (
 		<NavigationContent>
-
 			<Box
 				flex={1}
 				_dark={{ bg: "#121212" }}
@@ -184,25 +183,26 @@ function MenuNavigator({ initialRoute, children, screenOptions }) {
 							const { key, name } = route;
 							const { options } = descriptors[key];
 							const isCurrent = i === state.index;
-							console.log(state.routes)
 							if (isCurrent) {
 								return (
 									<TransparentButton
 										key={key}
 										icon={options.icon}
 										rightIcon={
-											state.routes.length > 1 ? (<Icon
-												as={
-													<Ionicons
-														name={"chevron-up"}
-													/>
-												}
-												size="sm"
-												color={useColorModeValue(
-													"#121212",
-													"white"
-												)}
-											/>) : null
+											state.routes.length > 1 ? (
+												<Icon
+													as={
+														<Ionicons
+															name={"chevron-up"}
+														/>
+													}
+													size="sm"
+													color={useColorModeValue(
+														"#121212",
+														"white"
+													)}
+												/>
+											) : null
 										}
 										onPress={onToggle}
 									>
