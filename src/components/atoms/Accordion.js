@@ -1,5 +1,4 @@
 import React, { useState, useReducer } from "react";
-import { MotiView } from "moti";
 import { Pressable, VStack, HStack, Text, View } from "native-base";
 import { Icon, ColoredIcon } from "../atoms/Icon";
 import { DescriptiveText } from "../molecules/DescriptiveText";
@@ -39,15 +38,10 @@ export const Accordion = ({ name, icon, color, listHeight, children }) => {
 					</HStack>
 				</HStack>
 			</Pressable>
-			<MotiView
-				transition={{ type: "timing" }}
-				animate={{ height }}
-				style={{ overflow: "hidden" }}
-			>
-				<View onLayout={onLayout} height={open ? listHeight : 0}>
-					{children}
-				</View>
-			</MotiView>
+
+			<View onLayout={onLayout} height={open ? listHeight : 0}>
+				{children}
+			</View>
 		</VStack>
 	);
 };

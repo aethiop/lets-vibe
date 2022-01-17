@@ -14,12 +14,19 @@ const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
 	const { gun, user, keys, isAuthed } = useAuth();
+	const { list: notifications } = useGunSetState(user.get("notifications"), {
+		interval: 10,
+	});
+	useEffect(() => {
+		console.log("NOTIFICATIONS: ", notifications);
+		console.log("Num: ", notifications.size);
+	}, [notifications]);
 
 	useEffect(async () => {
 		if (isAuthed && keys) {
 			await user.generateCert(
 				"*",
-				{ "*": "notifications" },
+				[{ "*": "notifications" }, { "*": "notify" }],
 				"certificates/notifications"
 			);
 		}
