@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "../atoms/Modal";
 import { PrimaryButton } from "../atoms/Button";
 import { VStack, HStack, Text, Center, Progress } from "native-base";
@@ -9,33 +9,33 @@ import { useAuth, useGunState, hash } from "../../hooks/useGun";
 import { useFileSystem, formatBytes } from "../../hooks/useFileSystem";
 export const FileUpload = ({ isOpen, currentPath, hideModal }) => {
 	const [fileSelected, setFileSelected] = useState(null);
+	const [data, setData] = useState(null);
+	const [soul, setSoul] = useState(null);
 	const { user, sea } = useAuth();
 	const { uploadFile } = useFileSystem();
 	const selectFile = async () => {
 		const result = await DocumentPicker.getDocumentAsync({});
 		if (result.type !== "cancel") {
 			setFileSelected(result);
+			if (fileSelected) {
+			}
 		}
 	};
+
 	const upload = async () => {
 		const { soul, data } = await uploadFile(fileSelected, currentPath);
-		const fileNode = user.get("dir").get(soul)
+		const fileNode = user.get("dir").get(soul);
 		fileNode.get("status").put("uploading");
-		fileNode.get("data").upload(data, null, (progress) => {
-			fileNode.get("progress").put(progress);
-			if (progress === 100) {
+		fileNode.get("data").upload(data, null, (p) => {
+			if (p === 100) {
 				fileNode.get("status").put("uploaded");
-				fileNode.get("progress").put(0);
-				hideModal();
-				setFileSelected(null);
 			}
+			p && fileNode.get("progress").put(p);
 		});
+		setFileSelected(null);
 	};
 	return (
-		<Modal
-			isOpen={isOpen}
-			hideModal={hideModal}
-		>
+		<Modal isOpen={isOpen} hideModal={hideModal}>
 			{!fileSelected ? (
 				<>
 					<Text px={4} py={3} fontSize="lg" fontWeight="bold">
@@ -66,11 +66,16 @@ export const FileUpload = ({ isOpen, currentPath, hideModal }) => {
 						<Center>
 							<Text>{formatBytes(fileSelected.size)}</Text>
 						</Center>
-						</HStack>
+					</HStack>
 
-					<PrimaryButton colorScheme="primary" icon="cloud-upload" onPress={upload}>
+					<PrimaryButton
+						colorScheme="primary"
+						icon="cloud-upload"
+						onPress={upload}
+					>
 						Upload
 					</PrimaryButton>
+					{/* <Upload soul={soul} data={data} /> */}
 				</>
 			)}
 		</Modal>

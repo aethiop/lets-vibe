@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Modal as Md, VStack, Text } from "native-base";
 import { PrimaryButton } from "./Button";
 import { TextInput } from "./Input";
-import { Light } from "three";
 
 export const Modal = ({ isOpen, hideModal, children }) => {
   return (
@@ -30,4 +29,5 @@ export const Modal = ({ isOpen, hideModal, children }) => {
       </Md.Content>
     </Md>
   );
+
 };

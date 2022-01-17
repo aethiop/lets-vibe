@@ -5,7 +5,7 @@ import { IconButton } from "../../components/atoms/Button";
 
 export default function SeachScreen({ navigation }) {
 	return (
-		<VStack space={4} _dark={{ bg: "#121212" }} flex={1}>
+		<VStack pt={3} space={4} _dark={{ bg: "#121212" }} flex={1}>
 			<HStack
 				w="full"
 				px={4}

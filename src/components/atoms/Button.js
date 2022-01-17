@@ -30,29 +30,30 @@ const PrimaryButton = (props) => {
 };
 
 const TransparentButton = (props) => {
-  const { colorMode } = useColorMode();
-  return (
-    <Button
-      borderRadius="full"
-      size="md"
-      mx={2}
-      colorScheme={colorMode}
-      variant="outline"
-      leftIcon={
-        <Icon
-          as={<Ionicons name={props.icon} />}
-          size="sm"
-          color={useColorModeValue("#121212", "white")}
-        />
-      }
-      py={3}
-      {...props}
-    >
-      <Text px={2} fontWeight={"bold"}>
-        {props.children}
-      </Text>
-    </Button>
-  );
+
+	const { colorMode } = useColorMode();
+	return (
+		<Button
+			borderRadius="full"
+			size="md"
+			mx={2}
+			colorScheme={colorMode}
+			variant="outline"
+			leftIcon={
+				<Icon
+					as={<Ionicons name={props.icon} />}
+					size="sm"
+					color={useColorModeValue("#121212", "white")}
+				/>
+			}
+			py={3}
+			{...props}
+		>
+			<Text px={2} fontWeight={"bold"}>
+				{props.children}
+			</Text>
+		</Button>
+	);
 };
 const TextButton = (props) => {
   return (
@@ -69,16 +70,20 @@ const TextButton = (props) => {
   );
 };
 const IconButton = (props) => {
-  return (
-    <IB
-      {...props}
-      variant="unstyled"
-      colorScheme={props.colorScheme || "white"}
-      borderRadius={"full"}
-      icon={
-        <Icon as={<Ionicons name={props.icon} />} size={props.size || "sm"} />
-      }
-    />
-  );
+
+	return (
+		<IB
+			{...props}
+			colorScheme={props.colorScheme || "white"}
+			borderRadius={"full"}
+			icon={
+				<Icon
+					as={<Ionicons name={props.icon} />}
+					size="sm"
+					color={props.color}
+				/>
+			}
+		/>
+	);
 };
 export { PrimaryButton, TextButton, IconButton, TransparentButton };

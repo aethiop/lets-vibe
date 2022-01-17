@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { IconButton, PrimaryButton } from "../../../components/atoms/Button";
 import * as DocumentPicker from "expo-document-picker";
 import { TextInput } from "../../../components/atoms/Input";
-import Animated, { useAnimatedGestureHandler } from "react-native-reanimated";
 import { Heading } from "../../../components/molecules/Heading";
 import { useAuth, useGunSetState, useGunState } from "../../../hooks/useGun";
 import { useFile, useUpload } from "../../../hooks/useFile";
@@ -20,7 +19,7 @@ export default function Library({ navigation, route }) {
 	const { showCurrentPath } = useFileSystem();
 	const path = route.params.path;
 	const items = showCurrentPath(path);
-	
+
 	return (
 		<>
 			<VStack space={4} flex={1}>

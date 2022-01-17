@@ -1,13 +1,28 @@
-import React from "react";
-import { Text, HStack, StatusBar, Pressable } from "native-base";
+import React, { useEffect, useLayoutEffect } from "react";
+
+import {
+	Text,
+	HStack,
+	StatusBar,
+	Pressable,
+	Box,
+	useColorModeValue,
+} from "native-base";
 import { IconButton } from "../atoms/Button";
 import { Identity } from "../atoms/Identity";
+import { useAuth, useGunState } from "../../hooks/useGun";
 
 export const Heading = (props) => {
 	const { name, publicKey, navigation } = props;
+	const { user } = useAuth();
+	const { fields: notify, put } = useGunState(user.get("notify"), {
+		interval: 0,
+	});
+	const { enabled } = notify;
+	console.log("Notified", enabled);
 	return (
 		<>
-			<StatusBar backgroundColor="primary.500" barStyle="light-content" />
+			<StatusBar barStyle="light-content" />
 			<HStack
 				px="1"
 				py="3"
@@ -24,11 +39,32 @@ export const Heading = (props) => {
 				</Pressable>
 				<HStack px="4" space={2}>
 					<IconButton
-						onPress={() => navigation.navigate("Search")}
+						onPress={() => navigation.push("Search")}
 						icon="search-outline"
 					/>
-					<IconButton icon="people-outline" />
-					<IconButton icon="notifications-outline" />
+					<IconButton
+						icon="people-outline"
+						onPress={() => navigation.push("Friends")}
+					/>
+					<Box flex={1}>
+						<IconButton
+							icon="notifications-outline"
+							onPress={() => {
+								navigation.navigate("Notifications");
+								put({ enabled: false });
+							}}
+						/>
+						{enabled && (
+							<Text
+								bg="red.500"
+								p={2}
+								position="absolute"
+								top={0}
+								right={0}
+								rounded="full"
+							></Text>
+						)}
+					</Box>
 				</HStack>
 			</HStack>
 		</>

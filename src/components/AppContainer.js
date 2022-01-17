@@ -1,58 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeBaseProvider, StatusBar } from "native-base";
-// import { AuthProvider } from "../contexts/auth";
-// import { FileSystemProvider } from "../contexts/file";
+import "gun/lib/mobile";
 import Gun from "gun/gun";
-import sea from "gun/sea";
+
+import SEA from "gun/sea";
+import "gun/lib/then";
 import "gun/lib/promise";
-import "../lib/file-upload";
-import "gun/lib/radix";
-import "gun/lib/radisk";
+import "gun/lib/open";
 import "gun/lib/store";
-import "gun/lib/rindexed";
+import "gun/lib/path";
+import "../lib/file-upload";
+import "../lib/friend";
 
 import * as idb from "idb-keyval";
 import { GunProvider } from "../hooks/useGun";
 import { ThemeContainer } from "./ThemeContainer";
-import { FileSystemProvider } from "../hooks/useFileSystem";
-
+import { CertProvider } from "../hooks/useCert";
+import { NotificationProvider } from "../hooks/useNotifications";
+import { FriendProvider } from "../hooks/useFriend";
 const linking = {
-  prefixes: [
-    "http://localhost:19006",
-    "https://marda.studio",
-    "https://www.marda.studio",
-  ],
-  config: {
-    screens: {
-      Main: {
-        screens: {
-          Home: {
-            screens: {
-              Library: "library",
-              Room: {
+
+	prefixes: ["https://vibe.marda.studio", "vibe.marda.studio"],
+	config: {
+		screens: {
+			Main: {
+				screens: {
+					Home: {
+						screens: {
+							Library: "library",
+							Chats: {
+								screens: {
+									Chats: "chats",
+									Chat: "chats/:pub",
+								},
+							},
+							Room: {
                 screens: {
                   Rooms: "rooms",
-                  Room: "room",
+                  Room: "room/",
                 },
               },
-              Note: "notes",
-              Game: "games",
-              Task: "tasks",
-            },
-          },
-          Settings: "settings",
-          Search: "search",
-        },
-      },
-      Auth: {
-        screens: {
-          Login: "login",
-          Register: "register",
-        },
-      },
-    },
-  },
+							Notes: "notes",
+							Games: "games",
+							Tasks: "tasks",
+						},
+					},
+					Settings: "settings",
+					Search: "search",
+					Profile: "profile/:user",
+				},
+			},
+
+			Auth: {
+				screens: {
+					Login: "login",
+					Register: "register",
+				},
+			},
+		},
+	},
 };
 const asyncFn =
   (fn) =>
@@ -66,21 +72,29 @@ const storage = {
   getItem: asyncFn(idb.get.bind(idb)),
   removeItem: asyncFn(idb.del.bind(idb)),
 };
-const peers = ["https://marda.herokuapp.com/gun"];
 
 export default function AppContainer({ children }) {
-  return (
-    <NavigationContainer linking={linking}>
-      <GunProvider
-        peers={peers}
-        sea={sea}
-        Gun={Gun}
-        keyFieldName="vibeKeys"
-        storage={storage}
-        gunOpts={{ localStorage: false, radisk: true, peers }}
-      >
-        <ThemeContainer>{children}</ThemeContainer>
-      </GunProvider>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer linking={linking}>
+			<GunProvider
+				sea={SEA}
+				Gun={Gun}
+				keyFieldName="vibeKeys"
+				storage={storage}
+				gunOpts={{
+					peers: ["https://marda.herokuapp.com/gun"],
+					localStorage: false,
+					rad: false,
+				}}
+			>
+				<CertProvider>
+					<FriendProvider>
+						<NotificationProvider>
+							<ThemeContainer>{children}</ThemeContainer>
+						</NotificationProvider>
+					</FriendProvider>
+				</CertProvider>
+			</GunProvider>
+		</NavigationContainer>
+	);
 }

@@ -137,7 +137,11 @@ export const useUser = (gun, pub) => {
 	const [user, setUser] = useState(pub ? gun.user(pub) : gun.user());
 	useEffect(() => {
 		if (gun && !user) {
-			setUser(pub ? gun.user(pub) : gun.user());
+			setUser(
+				pub
+					? gun.user(pub)
+					: gun.user().recall({ sessionStorage: true })
+			);
 		}
 	}, [user, gun, pub]);
 	return user;
@@ -152,6 +156,7 @@ export const useAuthPair = (gun, keys, authenticate) => {
 	useEffect(() => {
 		if (userGraph && !userGraph.is && keys && authenticate) {
 			userGraph.auth(keys);
+			userGraph.put({ epub: keys.epub });
 		}
 	}, [authenticate, userGraph, keys]);
 
@@ -221,9 +226,9 @@ export const useGunNodeUpdated = (
 
 export const useGunState = (
 	ref,
-	opts = { keys: "", sea: null, interval: 100, useOpen: false }
+	opts = { keys: "", sea: null, interval: 100, useOpen: false, cert: null }
 ) => {
-	const { keys, sea, interval, useOpen } = opts;
+	const { keys, sea, interval, useOpen, cert } = opts;
 	const [appGraph] = useState(ref);
 	const [fields, dispatch] = useSafeReducer(nodeReducer, {});
 
@@ -254,9 +259,13 @@ export const useGunState = (
 	const put = async (data) => {
 		let encrypted = await encrypt(data, keys, sea);
 		await new Promise((res, rej) => {
-			appGraph.put(encrypted, (ack) => {
-				ack.err ? rej(ack.err) : res(data);
-			});
+			appGraph.put(
+				encrypted,
+				(ack) => {
+					ack.err ? rej(ack.err) : res(data);
+				},
+				{ opt: { cert } }
+			);
 		});
 	};
 
@@ -274,9 +283,9 @@ export const useGunState = (
 
 export const useGunSetState = (
 	ref,
-	opts = { keys: "", sea: null, interval: 100, useOpen: false }
+	opts = { keys: "", sea: null, interval: 100, useOpen: false, cert }
 ) => {
-	const { keys, sea, interval = 100 } = opts;
+	const { keys, sea, interval, cert } = opts;
 	const [appGraph] = useState(ref);
 	const [{ list }, dispatch] = useSafeReducer(setReducer, {
 		list: new Map(),
@@ -311,7 +320,6 @@ export const useGunSetState = (
 
 	const updateInSet = async (soul, data) => {
 		let encrypted = await encrypt(data, keys, sea);
-		console.log(data, soul);
 		await new Promise((res, rej) => {
 			appGraph
 				.get(soul)

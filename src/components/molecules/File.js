@@ -10,36 +10,48 @@ import { DescriptiveText } from "./DescriptiveText";
 import { useGunState, useAuth } from "../../hooks/useGun";
 import { formatBytes, uriToFile } from "../../hooks/useFileSystem";
 export const File = (props) => {
-	const { user } = useAuth()
-	const { soul, icon, iconColor} = props;
+	const { user } = useAuth();
+	const { soul, icon, iconColor } = props;
 	const [isOpen, setOpen] = React.useState(false);
 	const [onEdit, setEdit] = React.useState(false);
-	const { fields: file, put, remove } = useGunState(user.get("dir").get(soul), { interval: 10 });
-	const {name, path, parent, parentPath, proof, size, pub, progress, status } = file;
-const download = () => {
-	put({ status: "downloading" });
-	user.get("dir")
-		.get(soul)
-		.get("data")
-		.download(proof, size, async (pr, file) => {
-			if (pr < 100) {
+	const {
+		fields: file,
+		put,
+		remove,
+	} = useGunState(user.get("dir").get(soul), { interval: 10 });
+	const {
+		name,
+		path,
+		parent,
+		parentPath,
+		proof,
+		size,
+		pub,
+		progress,
+		status,
+	} = file;
+	const download = () => {
+		put({ status: "downloading" });
+		user.get("dir")
+			.get(soul)
+			.get("data")
+			.download(proof, size, async (pr, file) => {
+				if (pr && pr <= 100) put({ progress: pr });
+				if (pr === 100) {
+					put({ progress: null });
+				}
+				if (!!file) {
+					const fileUri = await uriToFile(file);
+					var link = document.createElement("a");
+					link.href = window.URL.createObjectURL(fileUri);
+					link.download = name;
+					link.click();
+					window.URL.revokeObjectURL(link.href);
+					setOpen(false);
+				}
+			});
+	};
 
-				put({ progress: pr });
-			}
-			if (!!file) {
-				const fileUri = await uriToFile(file);
-				put({ status: "downloaded", progress: 0 });
-				var link = document.createElement("a");
-				link.href = window.URL.createObjectURL(await uriToFile(file));
-				link.download = name;
-				link.click();
-				setOpen(false)
-			}
-		});
-	put({status: "idle"})
-};
-	
-	
 	return (
 		<>
 			<Card
@@ -60,14 +72,15 @@ const download = () => {
 				</Center>
 
 				<VStack space={3} py={2} px={2}>
-					
-					<Pressable onPress={download}>
-						<DescriptiveText
-							icon={"download-outline"}
-							iconBg={"#9E77F1"}
-							title="Download FIle"
-						></DescriptiveText>
-					</Pressable>
+					{status === "uploaded" && status !== "idle" && (
+						<Pressable onPress={download}>
+							<DescriptiveText
+								icon={"download-outline"}
+								iconBg={"#9E77F1"}
+								title="Download FIle"
+							></DescriptiveText>
+						</Pressable>
+					)}
 				</VStack>
 				<HStack
 					space={4}
@@ -76,17 +89,21 @@ const download = () => {
 					alignItems={"center"}
 				>
 					<HStack space={2} alignItems={"center"}>
-						{!!progress && (
+						{progress && status !== "idle" && (
 							<HStack alignItems={"center"} space={1}>
 								<Icon
-									name={status=== "uploading" ? "arrow-up": "arrow-down"}
+									name={
+										status === "uploading"
+											? "arrow-up"
+											: "arrow-down"
+									}
 									size={14}
 									color={iconColor}
 								/>
 								<Text>{progress?.toFixed(0)} %</Text>
 							</HStack>
 						)}
-					
+
 						<Text fontSize={"xs"} fontWeight={"thin"}>
 							Size: {formatBytes(size)}
 						</Text>

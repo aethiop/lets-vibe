@@ -21,8 +21,8 @@ export default function Login({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={{ flex: 1 }}>
 			<Center _dark={{ bg: "#121212" }} flex={1} py={10}>
-				<VStack w={{ base: "75%", md: "25%" }} space={3}>
-					<Center my={5} flex={1}>
+				<VStack w={{ base: "75%", md: "25%" }} space={5}>
+					<Center>
 						<Logo />
 					</Center>
 					<TextInput

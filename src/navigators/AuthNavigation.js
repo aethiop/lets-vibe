@@ -10,6 +10,7 @@ export default function AuthNavigation() {
 			initialRouteName="Register"
 			screenOptions={{
 				headerShown: false,
+				animationEnabled: false,
 			}}
 		>
 			<Stack.Screen name="Register" component={RegisterScreen} />

@@ -24,10 +24,7 @@ const showPath = (path) => {
 		_ === len - 1
 			? arr.push(
 					<HStack key={p} alignItems={"center"} space={2}>
-						<Icon
-							icon="chevron-forward"
-							size={24}
-						/>
+						<Icon icon="chevron-forward" size={24} />
 						<Text fontWeight={"700"} fontSize={"md"} key={_ + 1}>
 							{p}
 						</Text>
@@ -35,11 +32,10 @@ const showPath = (path) => {
 			  )
 			: arr.push(
 					<HStack key={_ + 1} alignItems={"center"} space={2}>
-						<Icon
-							icon="chevron-forward"
-							size={24}
-						/>
-						<Text fontWeight={'thin'} fontSize={"md"}>{p}</Text>
+						<Icon icon="chevron-forward" size={24} />
+						<Text fontWeight={"thin"} fontSize={"md"}>
+							{p}
+						</Text>
 					</HStack>
 			  );
 	});
@@ -48,10 +44,14 @@ const showPath = (path) => {
 
 export const Path = ({ currentPath, navigation }) => {
 	return (
-		<HStack alignItems={"center"} space={3} w="full" overflowX="auto">
+		<HStack alignItems={"center"} space={3} w="full">
 			<IconButton
 				disabled={currentPath === "/"}
-				icon={currentPath === "/" ? "chevron-back-circle-outline" : "chevron-back-circle"}
+				icon={
+					currentPath === "/"
+						? "chevron-back-circle-outline"
+						: "chevron-back-circle"
+				}
 				onPress={() =>
 					currentPath === "/"
 						? null

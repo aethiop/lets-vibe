@@ -12,16 +12,16 @@ import Gun from "gun/gun";
 
 const FileSystemContext = createContext();
 export const formatBytes = (bytes, decimals = 2) => {
-    if (bytes === 0) return '0 Bytes';
+	if (bytes === 0) return "0 Bytes";
 
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	const k = 1024;
+	const dm = decimals < 0 ? 0 : decimals;
+	const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+};
 export function uriToFile(url) {
 	return fetch(url).then(async function (res) {
 		return res.blob();
@@ -29,14 +29,13 @@ export function uriToFile(url) {
 }
 export const FileSystemProvider = ({ children }) => {
 	const [root, setRoot] = useState(null);
-	const { gun, user, sea, keys, isAuthed, } = useAuth();
+	const { gun, user, sea, keys, isAuthed } = useAuth();
 
 	const { fields: directory, put } = useGunState(user.get("dir"), {});
 	const { list: directoryList, updateInSet } = useGunSetState(
 		user.get("dir"),
 		{}
 	);
-
 
 	const directoryKeys = Array.from(directoryList.keys());
 	const directoryArray = directoryKeys.map((k) => {
@@ -47,7 +46,6 @@ export const FileSystemProvider = ({ children }) => {
 		setRoot(rootHash);
 		const initialDir = await user.get("dir").get(rootHash);
 		if (!!directory && isAuthed && !initialDir) {
-			console.log("Creating Root Folder");
 			const rootFolder = {
 				[rootHash]: {
 					name: "root",
@@ -96,17 +94,24 @@ export const FileSystemProvider = ({ children }) => {
 		if (directoryList.get(parentId) && child.soul) {
 			user.get("dir").get(parentId).get("children").set(child.soul);
 		}
-		if (child.type === "file" || child.type === "folder" && child.size > 0) {
-			
-			user.get("dir").get(parentId).once(async (data,) => {
-				if (data && data.parent) {
-					console.log("updating parent");
-					console.log(data.size);
-					user.get("dir").get(parentId).get("size").put(data.size + child.size);
-					updateParent(data.parent, {size: child.size, type: data.type});
-
-				}
-			})
+		if (
+			child.type === "file" ||
+			(child.type === "folder" && child.size > 0)
+		) {
+			user.get("dir")
+				.get(parentId)
+				.once(async (data) => {
+					if (data && data.parent) {
+						user.get("dir")
+							.get(parentId)
+							.get("size")
+							.put(data.size + child.size);
+						updateParent(data.parent, {
+							size: child.size,
+							type: data.type,
+						});
+					}
+				});
 		}
 	};
 
@@ -114,7 +119,6 @@ export const FileSystemProvider = ({ children }) => {
 		let found = 0;
 
 		directoryKeys.forEach((k) => {
-			console.log(directoryList.get(k))
 			if (
 				directoryList.get(k).name.includes(child.name) &&
 				child.parent === parentId
@@ -156,7 +160,6 @@ export const FileSystemProvider = ({ children }) => {
 	const uploadFile = async (file, parentPath) => {
 		const { soul: parentId } = await getParent(parentPath);
 
-
 		const fileHash = await hash(file.uri, sea, 16);
 
 		const newFile = {
@@ -171,12 +174,11 @@ export const FileSystemProvider = ({ children }) => {
 			path: null,
 			data: null,
 			pub: keys.pub,
-			proof: await SEA.work(file.uri, null, null , {name: "SHA-256"}),
+			proof: await SEA.work(file.uri, null, null, { name: "SHA-256" }),
 			created: Gun.state(),
 			modified: Gun.state(),
 		};
 		const found = checkDirectory(parentId, newFile);
-		console.log(found);
 		if (found > 0) {
 			let temp = newFile.name.split(".");
 			if (temp.length > 1) {
