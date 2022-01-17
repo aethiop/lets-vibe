@@ -1,13 +1,14 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import Chat from "../screens/App/Chat/Chat";
 import Room from "../screens/App/Chat/Room/Room";
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function RoomNavigation(props) {
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
+				animationEnabled: false,
 			}}
 			initialRouteName="Chats"
 		>

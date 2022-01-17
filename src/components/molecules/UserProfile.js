@@ -27,7 +27,7 @@ export const UserProfile = ({ navigation, children, publicKey }) => {
 			space={4}
 			alignItems={"center"}
 			borderWidth={1}
-			borderColor={useColorModeValue("light.300", "dark.300")}
+			borderColor={useColorModeValue("light.300", "dark.200")}
 			rounded="2xl"
 			p={4}
 		>

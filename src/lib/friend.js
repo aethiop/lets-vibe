@@ -38,6 +38,10 @@ Gun.chain.addFriend = async function (pub) {
 				if (err) {
 					console.log("Error: ", err);
 				} else {
+					gun.user(pub)
+						.get("notify")
+						.get("enabled")
+						.put(true, null, { opt: { cert } });
 					user.generateCert(
 						pub,
 						{ "*": "friends" },

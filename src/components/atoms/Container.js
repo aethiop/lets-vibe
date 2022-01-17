@@ -2,6 +2,8 @@ import React, { useLayoutEffect, useEffect } from "react";
 import { Box, useColorMode } from "native-base";
 import { Heading } from "../molecules/Heading";
 import { useAuth, useGunState, useGunSetState } from "../../hooks/useGun";
+import { Platform } from "react-native";
+
 export const Container = ({
 	title,
 	navigation,
@@ -14,7 +16,7 @@ export const Container = ({
 	const { colorMode, setColorMode } = useColorMode();
 
 	const { fields: profile } = useGunState(user.get("profile"), {
-		interval: 300,
+		interval: 0,
 	});
 	const { themeMode } = profile;
 

@@ -44,7 +44,7 @@ export default function FriendScreen({ navigation }) {
 		.filter((f) => f !== user.is.pub);
 
 	return (
-		<VStack space={4} _dark={{ bg: "#121212" }} flex={1}>
+		<VStack pt={3} space={4} _dark={{ bg: "#121212" }} flex={1}>
 			<HStack
 				w="full"
 				px={4}

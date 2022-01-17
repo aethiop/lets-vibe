@@ -10,7 +10,6 @@ export const Modal = ({ isOpen, hideModal, children }) => {
 			size="md"
 			isOpen={isOpen}
 			avoidKeyboard={true}
-			motionPreset="none"
 			overlayVisible={true}
 			backdropOpacity={0.5}
 			onClose={hideModal}

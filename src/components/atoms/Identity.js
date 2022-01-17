@@ -5,7 +5,6 @@ import { SvgXml } from "react-native-svg";
 // import SvgUri from "react-native-svg-uri";
 
 import { Center, Image } from "native-base";
-import { MotiView } from "moti";
 export const Identity = ({ publicKey, size }) => {
 	var url = `https://vibatar.herokuapp.com/4.x/big-smile/png?seed=${publicKey}`;
 

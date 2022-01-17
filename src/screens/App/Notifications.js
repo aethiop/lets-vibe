@@ -32,13 +32,13 @@ export default function NotificationScreen({ navigation }) {
 	});
 
 	return (
-		<VStack space={4} _dark={{ bg: "#121212" }} flex={1}>
+		<VStack pt={3} space={4} _dark={{ bg: "#121212" }} flex={1}>
 			<HStack
 				w="full"
 				px={4}
 				py={4}
 				alignItems={"center"}
-				justifyContent={"space-between"}
+				justifyContent={"flex-end"}
 			>
 				<IconButton
 					icon="arrow-back"
@@ -48,7 +48,6 @@ export default function NotificationScreen({ navigation }) {
 				/>
 			</HStack>
 			{notificationList.map((notification) => {
-				console.log(notification);
 				if (notification.pub) {
 					return (
 						<UserProfile
@@ -60,9 +59,6 @@ export default function NotificationScreen({ navigation }) {
 								size="md"
 								onPress={() => {
 									updateInSet(notification.key, null);
-
-									// removeFromSet(notification.key);
-									// removeFromSet(notification.key);
 								}}
 							/>
 							<IconButton
@@ -79,32 +75,6 @@ export default function NotificationScreen({ navigation }) {
 					);
 				}
 			})}
-
-			{/* {Object.keys(notification).length > 0 &&
-				Object.keys(notification)?.map((key) => {
-					var pub = notification[key].pub;
-					var name = notification[key].name;
-					return (
-						<UserProfile publicKey={pub} username={name} key={key}>
-							<IconButton
-								icon="close-outline"
-								size="md"
-								onPress={() => {
-									user.rejectFriend(key);
-									
-								}}
-							/>
-							<IconButton
-								icon="checkmark"
-								size="md"
-								onPress={async () => {
-									await user.acceptFriend(pub, key);
-									
-								}}
-							/>
-						</UserProfile>
-					);
-				})} */}
 			<HStack
 				safeAreaTop
 				mt={"auto"}

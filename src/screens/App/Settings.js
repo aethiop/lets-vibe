@@ -8,12 +8,12 @@ import {
 	Text,
 	Pressable,
 	Box,
+	StatusBar,
 	useToast,
 	useColorMode,
 	useColorModeValue,
 	Skeleton,
 } from "native-base";
-import { MotiView } from "moti";
 import { IconButton } from "../../components/atoms/Button";
 import { Ionicons } from "@expo/vector-icons";
 import { PrimaryButton } from "../../components/atoms/Button";
@@ -40,7 +40,14 @@ export default function SettingsScreen({ navigation }) {
 	const { name = "", themeMode } = profile;
 
 	return (
-		<VStack space={4} _dark={{ bg: "#121212" }} w="full" h="full" flex={1}>
+		<VStack
+			space={4}
+			_dark={{ bg: "#121212" }}
+			w="full"
+			h="full"
+			pt={4}
+			flex={1}
+		>
 			<HStack justifyContent="flex-end" py="5" px="5">
 				<IconButton
 					onPress={() => navigation.goBack()}
@@ -74,22 +81,21 @@ export default function SettingsScreen({ navigation }) {
 
 					<HStack space={4} justifyContent={"center"}>
 						<PrimaryButton
-							disabled={copyPub}
 							onPress={() => {
 								setCopyPub(true);
 								Clipboard.setString(keys.pub);
 							}}
-							colorScheme={copyPub ? "disabled" : "primary"}
+							colorScheme="primary"
 							icon={copyPub ? "checkmark" : "copy"}
 						>
 							{copyPub ? "Copied!" : "Public Key"}
 						</PrimaryButton>
 						<PrimaryButton
+							colorScheme="secondary"
 							onPress={() => {
 								setCopyPriv(true);
 								Clipboard.setString(JSON.stringify(keys));
 							}}
-							colorScheme={copyPriv ? "disabled" : "secondary"}
 							icon={copyPriv ? "checkmark" : "finger-print"}
 						>
 							{copyPriv ? "Copied!" : "Private Key"}
@@ -97,7 +103,7 @@ export default function SettingsScreen({ navigation }) {
 					</HStack>
 				</Center>
 
-				<VStack flex={1} space={2} py={4} alignItems={"center"}>
+				<VStack flex={1} space={2} py={4}>
 					{/* <Accordion /> */}
 
 					{editing ? (
@@ -191,7 +197,7 @@ export default function SettingsScreen({ navigation }) {
 					onPress={async () => {
 						logout(() => {
 							console.log("Logged out");
-							window.location.assign("/register");
+							window.location.reload();
 						});
 					}}
 					px="10"

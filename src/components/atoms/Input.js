@@ -9,16 +9,15 @@ const TextInput = (props) => {
 			borderRadius="full"
 			fontWeight={600}
 			size="md"
-			py={2}
-			px={5}
 			placeholderTextColor={useColorModeValue("light.400", "dark.400")}
 			variant="outline"
 			bg={useColorModeValue("light.300", "dark.200")}
 			InputLeftElement={
 				<Icon
-					as={<Ionicons name={props.icon} />}
+					as={<Ionicons name={props.icon} size="sm" />}
 					size="sm"
 					px={3}
+					mr={2}
 					color={useColorModeValue("light.400", "dark.400")}
 				/>
 			}

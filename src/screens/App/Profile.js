@@ -17,12 +17,7 @@ export default function ProfileScreen({ navigation, route }) {
 	// const { name = "", themeMode } = profile;
 	console.log(themeMode);
 	return (
-		<ScrollView
-			space={4}
-			bg={themeMode === "light" ? "light.50" : "#121212"}
-			flex={1}
-			position=""
-		>
+		<ScrollView space={4} _dark={{ bg: "#121212" }} flex={1} position="">
 			<HStack justifyContent="flex-end" py="5" px="5">
 				<IconButton
 					onPress={() => navigation.goBack()}

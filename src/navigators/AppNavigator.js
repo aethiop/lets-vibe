@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createMenuNavigator } from "../components/organisms/MenuNavigator";
 import NotesScreen from "../screens/App/Notes/Notes";
 import GameScreen from "../screens/App/Games/Games";
@@ -9,7 +9,7 @@ import { useAuth, useGunSetState } from "../hooks/useGun";
 import { FileSystemProvider } from "../hooks/useFileSystem";
 import RoomNavigation from "./RoomNavigation";
 import Chats from "../screens/App/Chat/Chat";
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const MenuNav = createMenuNavigator();
 const LibraryView = (props) => {
@@ -42,6 +42,7 @@ export default function AppNavigation() {
 			initialRouteName="Library"
 			screenOptions={{
 				headerShown: false,
+				animationEnabled: false,
 			}}
 		>
 			<MenuNav.Screen

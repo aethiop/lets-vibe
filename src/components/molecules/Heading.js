@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
+
 import {
 	Text,
 	HStack,
@@ -9,38 +10,16 @@ import {
 } from "native-base";
 import { IconButton } from "../atoms/Button";
 import { Identity } from "../atoms/Identity";
-import { useAuth, useGunSetState } from "../../hooks/useGun";
+import { useAuth, useGunState } from "../../hooks/useGun";
 
 export const Heading = (props) => {
 	const { name, publicKey, navigation } = props;
-	const { keys, isAuthed, user, sea } = useAuth();
-	const { list: notifications } = useGunSetState(user.get("notifications"), {
+	const { user } = useAuth();
+	const { fields: notify, put } = useGunState(user.get("notify"), {
 		interval: 0,
 	});
-	let notificationList = Array.from(notifications.keys()).map((key) => {
-		if (notifications.get(key) && notifications.get(key) !== null) {
-			return {
-				key,
-				pub: Object.values(notifications.get(key))
-					.slice(0, -1)
-					.join(""),
-			};
-		}
-	});
-	useEffect(() => {
-		if (!!notificationList) return;
-
-		notificationList = Array.from(notifications.keys()).map((key) => {
-			if (notifications.get(key) && notifications.get(key) !== null) {
-				return {
-					key,
-					pub: Object.values(notifications.get(key))
-						.slice(0, -1)
-						.join(""),
-				};
-			}
-		});
-	}, []);
+	const { enabled } = notify;
+	console.log("Notified", enabled);
 	return (
 		<>
 			<StatusBar barStyle="light-content" />
@@ -60,31 +39,30 @@ export const Heading = (props) => {
 				</Pressable>
 				<HStack px="4" space={2}>
 					<IconButton
-						onPress={() => navigation.navigate("Search")}
+						onPress={() => navigation.push("Search")}
 						icon="search-outline"
 					/>
 					<IconButton
 						icon="people-outline"
-						onPress={() => navigation.navigate("Friends")}
+						onPress={() => navigation.push("Friends")}
 					/>
-					<Box>
+					<Box flex={1}>
 						<IconButton
 							icon="notifications-outline"
-							onPress={() => navigation.navigate("Notifications")}
+							onPress={() => {
+								navigation.navigate("Notifications");
+								put({ enabled: false });
+							}}
 						/>
-						{notificationList && notificationList.length > 0 && (
+						{enabled && (
 							<Text
-								position="absolute"
-								top="0"
-								right="0"
 								bg="red.500"
-								px={1.5}
+								p={2}
+								position="absolute"
+								top={0}
+								right={0}
 								rounded="full"
-								color={useColorModeValue("white", "black")}
-								fontSize="xs"
-							>
-								{notificationList.length}
-							</Text>
+							></Text>
 						)}
 					</Box>
 				</HStack>

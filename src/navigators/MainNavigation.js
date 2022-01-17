@@ -1,5 +1,5 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/App/Room/Room";
 import SearchScreen from "../screens/App/Search";
 import SettingsScreen from "../screens/App/Settings";
@@ -9,13 +9,14 @@ import FriendScreen from "../screens/App/Friends";
 import NotificationScreen from "../screens/App/Notifications";
 import ProfileScreen from "../screens/App/Profile";
 import RoomScreen from "../screens/App/Chat/Room/Room";
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export default function MainNavigation() {
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
+				animationEnabled: false,
 			}}
 		>
 			<Stack.Screen name="Home" component={AppNavigation} />
