@@ -5,7 +5,7 @@ import { NativeBaseProvider, StatusBar } from "native-base";
 // import { FileSystemProvider } from "../contexts/file";
 import Gun from "gun/gun";
 import sea from "gun/sea";
-import "gun/lib/promise"
+import "gun/lib/promise";
 import "../lib/file-upload";
 import "gun/lib/radix";
 import "gun/lib/radisk";
@@ -18,64 +18,69 @@ import { ThemeContainer } from "./ThemeContainer";
 import { FileSystemProvider } from "../hooks/useFileSystem";
 
 const linking = {
-	prefixes: [
-		"http://localhost:19006",
-		"https://marda.studio",
-		"https://www.marda.studio",
-	],
-	config: {
-		screens: {
-			Main: {
-				screens: {
-					Home: {
-						screens: {
-							Library: "library",
-							Rooms: "room",
-							Notes: "notes",
-							Games: "games",
-							Tasks: "tasks",
-						},
-					},
-					Settings: "settings",
-					Search: "search",
-				},
-			},
-			Auth: {
-				screens: {
-					Login: "login",
-					Register: "register",
-				},
-			},
-		},
-	},
+  prefixes: [
+    "http://localhost:19006",
+    "https://marda.studio",
+    "https://www.marda.studio",
+  ],
+  config: {
+    screens: {
+      Main: {
+        screens: {
+          Home: {
+            screens: {
+              Library: "library",
+              Room: {
+                screens: {
+                  Rooms: "rooms",
+                  Room: "room",
+                },
+              },
+              Note: "notes",
+              Game: "games",
+              Task: "tasks",
+            },
+          },
+          Settings: "settings",
+          Search: "search",
+        },
+      },
+      Auth: {
+        screens: {
+          Login: "login",
+          Register: "register",
+        },
+      },
+    },
+  },
 };
 const asyncFn =
-	(fn) =>
-	(...args) => {
-		return new Promise((resolve) => {
-			resolve(fn.call(this, ...args));
-		});
-	};
+  (fn) =>
+  (...args) => {
+    return new Promise((resolve) => {
+      resolve(fn.call(this, ...args));
+    });
+  };
 const storage = {
-	setItem: asyncFn(idb.set.bind(idb)),
-	getItem: asyncFn(idb.get.bind(idb)),
-	removeItem: asyncFn(idb.del.bind(idb)),
+  setItem: asyncFn(idb.set.bind(idb)),
+  getItem: asyncFn(idb.get.bind(idb)),
+  removeItem: asyncFn(idb.del.bind(idb)),
 };
 const peers = ["https://marda.herokuapp.com/gun"];
 
 export default function AppContainer({ children }) {
-	return (
-		<NavigationContainer linking={linking}>
-			<GunProvider
-				peers={peers}
-				sea={sea}
-				Gun={Gun}
-				keyFieldName="vibeKeys"
-				storage={storage}
-				gunOpts={{ localStorage: false, radisk: true, peers }}
-			>
-				<ThemeContainer>{children}</ThemeContainer>
-			</GunProvider>
-		</NavigationContainer>
-	);
+  return (
+    <NavigationContainer linking={linking}>
+      <GunProvider
+        peers={peers}
+        sea={sea}
+        Gun={Gun}
+        keyFieldName="vibeKeys"
+        storage={storage}
+        gunOpts={{ localStorage: false, radisk: true, peers }}
+      >
+        <ThemeContainer>{children}</ThemeContainer>
+      </GunProvider>
+    </NavigationContainer>
+  );
 }
