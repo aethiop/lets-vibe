@@ -1,5 +1,6 @@
 import React, { ComponentProps, useReducer, useState, useEffect } from "react";
 import {
+
 	HStack,
 	VStack,
 	Center,
@@ -27,16 +28,15 @@ import { DescriptiveText } from "../../components/molecules/DescriptiveText";
 import * as Clipboard from "expo-clipboard";
 
 export default function SettingsScreen({ navigation }) {
-	const { keys, sea, user, logout } = useAuth();
-	const [copyPub, setCopyPub] = useState(false);
-	const [copyPriv, setCopyPriv] = useState(false);
-	const [editing, setEditing] = useState(false);
-	const { colorMode, toggleColorMode } = useColorMode();
-	const toast = useToast();
-	const { fields: profile, put } = useGunState(user.get("profile"), {
-		interval: 0,
-	});
-
+  const { keys, sea, user, logout } = useAuth();
+  const [copyPub, setCopyPub] = useState(false);
+  const [copyPriv, setCopyPriv] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
+  const toast = useToast();
+  const { fields: profile, put } = useGunState(user.get("profile"), {
+    interval: 0,
+  });
 	const { name = "", themeMode } = profile;
 
 	return (

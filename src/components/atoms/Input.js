@@ -3,6 +3,7 @@ import { Input, Icon, useColorModeValue } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
 const TextInput = (props) => {
+
 	return (
 		<Input
 			{...props}

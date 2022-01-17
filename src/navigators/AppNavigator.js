@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMenuNavigator } from "../components/organisms/MenuNavigator";
 import NotesScreen from "../screens/App/Notes/Notes";
 import GameScreen from "../screens/App/Games/Games";
@@ -9,7 +9,7 @@ import { useAuth, useGunSetState } from "../hooks/useGun";
 import { FileSystemProvider } from "../hooks/useFileSystem";
 import RoomNavigation from "./RoomNavigation";
 import Chats from "../screens/App/Chat/Chat";
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const MenuNav = createMenuNavigator();
 const LibraryView = (props) => {
@@ -21,30 +21,23 @@ const LibraryView = (props) => {
 };
 
 export default function AppNavigation() {
-	const { user, keys } = useAuth();
-
-	// useEffect(() => {
-	// 	if (notificationList.length > 0) {
-	// 		notificationList.map((notification) => {
-	// 			console.log(notification);
-	// 			new Notification("Friend Request", {
-	// 				body:
-	// 					"You have a friend request from: " +
-	// 					notification.pub.slice(0, 8),
-	// 			});
-	// 		});
-	// 	}
-	// 	return () => {};
-	// }, [notificationList]);
-	// console.log(notificationList);
+	const { keys } = useAuth();
 	return (
 		<MenuNav.Navigator
-			initialRouteName="Library"
+			initialRouteName="Room"
 			screenOptions={{
 				headerShown: false,
-				animationEnabled: false,
 			}}
 		>
+			<MenuNav.Screen
+				name="Rooms"
+				component={RoomNavigation}
+				options={{
+					icon: "cube",
+					title: "Rooms",
+					pub: keys.pub,
+				}}
+			/>
 			<MenuNav.Screen
 				name="Library"
 				component={LibraryView}
@@ -66,43 +59,6 @@ export default function AppNavigation() {
 					pub: keys.pub,
 				}}
 			/>
-
-			{/* <MenuNav.Screen
-				name="Rooms"
-				component={RoomScreen}
-				options={{
-					icon: "cube",
-					title: "Rooms",
-					pub: keys.pub,
-				}}
-			/>
-			<MenuNav.Screen
-				name="Notes"
-				component={NotesScreen}
-				options={{
-					icon: "book",
-					title: "Notes",
-					pub: keys.pub,
-				}}
-			/>
-			<MenuNav.Screen
-				name="Games"
-				component={GameScreen}
-				options={{
-					icon: "game-controller",
-					title: "Games",
-					pub: keys.pub,
-				}}
-			/>
-			<MenuNav.Screen
-				name="Tasks"
-				component={TaskScreen}
-				options={{
-					icon: "checkbox",
-					title: "Task",
-					pub: keys.pub,
-				}}
-			/> */}
 		</MenuNav.Navigator>
 	);
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import "gun/lib/mobile";
 import Gun from "gun/gun";
+
 import SEA from "gun/sea";
 import "gun/lib/then";
 import "gun/lib/promise";
@@ -28,11 +28,16 @@ const linking = {
 							Library: "library",
 							Chats: {
 								screens: {
-									Chats: "chats/",
-									Room: "chats/:pub",
+									Chats: "chats",
+									Chat: "chats/:pub",
 								},
 							},
-							Rooms: "room",
+							Room: {
+								screens: {
+									Rooms: "rooms",
+									Room: "room/",
+								},
+							},
 							Notes: "notes",
 							Games: "games",
 							Tasks: "tasks",

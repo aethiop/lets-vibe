@@ -1,27 +1,29 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import Chat from "../screens/App/Chat/Chat";
-import Room from "../screens/App/Chat/Room/Room";
-const Stack = createStackNavigator();
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import RegisterScreen from "../screens/Auth/Register";
+import LoginScreen from "../screens/Auth/Login";
+import ShowRooms from "../screens/App/Room/ShowRooms";
+import Room from "../Screens/App/Room/Room";
+import Model from "../components/molecules/RoomComponents/Model";
+const Stack = createNativeStackNavigator();
 
-export default function RoomNavigation(props) {
-	return (
-		<Stack.Navigator
-			screenOptions={{
-				headerShown: false,
-				animationEnabled: false,
-			}}
-			initialRouteName="Chats"
-		>
-			<Stack.Screen
-				name="Chats"
-				component={Chat}
-				options={{ headeerShown: false }}
-			/>
-			<Stack.Screen
-				name="Room"
-				component={Room}
-				initialParams={{ pub: "" }}
-			/>
-		</Stack.Navigator>
-	);
+export default function RoomNavigation() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Rooms"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Rooms" component={Room} />
+      <Stack.Screen
+        name="Room"
+        component={Model}
+        initialParams={{
+          name: "",
+          description: "",
+        }}
+      />
+    </Stack.Navigator>
+  );
 }
