@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Gun from "gun/gun";
 import SEA from "gun/sea";
+import "gun/lib/mobile";
 import "gun/lib/then";
 import "gun/lib/promise";
 import "gun/lib/radix";
@@ -13,14 +14,13 @@ import "gun/lib/path";
 import "gun/lib/rindexed";
 import "../lib/file-upload";
 import "../lib/friend";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import * as idb from "idb-keyval";
 import { GunProvider } from "../hooks/useGun";
 import { ThemeContainer } from "./ThemeContainer";
 import { CertProvider } from "../hooks/useCert";
 import { NotificationProvider } from "../hooks/useNotifications";
 import { FriendProvider } from "../hooks/useFriend";
-
 const linking = {
 	prefixes: ["https://vibe.marda.studio", "vibe.marda.studio"],
 	config: {
@@ -30,7 +30,12 @@ const linking = {
 					Home: {
 						screens: {
 							Library: "library",
-							Chat: "chat/:room/:user",
+							Chats: {
+								screens: {
+									Chats: "chats/",
+									Room: "chats/:pub",
+								},
+							},
 							Rooms: "room",
 							Notes: "notes",
 							Games: "games",
@@ -39,7 +44,7 @@ const linking = {
 					},
 					Settings: "settings",
 					Search: "search",
-					Profile: { path: "profile/:pub", exact: true },
+					Profile: "profile/:user",
 				},
 			},
 
@@ -60,9 +65,9 @@ const asyncFn =
 		});
 	};
 const storage = {
-	setItem: asyncFn(idb.set.bind(idb)),
-	getItem: asyncFn(idb.get.bind(idb)),
-	removeItem: asyncFn(idb.del.bind(idb)),
+	setItem: asyncFn(AsyncStorage.setItem.bind(AsyncStorage)),
+	getItem: asyncFn(AsyncStorage.getItem.bind(AsyncStorage)),
+	removeItem: asyncFn(AsyncStorage.removeItem.bind(AsyncStorage)),
 };
 
 export default function AppContainer({ children }) {
@@ -74,7 +79,7 @@ export default function AppContainer({ children }) {
 				keyFieldName="vibeKeys"
 				storage={storage}
 				gunOpts={{
-					peers: ["https://marda.herokuapp.com/gun"],
+					peers: ["http://localhost:8765/gun"],
 					localStorage: false,
 					rad: false,
 				}}
