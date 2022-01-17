@@ -1,5 +1,5 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/App/Room/Room";
 import SearchScreen from "../screens/App/Search";
 import SettingsScreen from "../screens/App/Settings";
@@ -9,7 +9,7 @@ import FriendScreen from "../screens/App/Friends";
 import NotificationScreen from "../screens/App/Notifications";
 import ProfileScreen from "../screens/App/Profile";
 import RoomScreen from "../screens/App/Chat/Room/Room";
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function MainNavigation() {
 	return (

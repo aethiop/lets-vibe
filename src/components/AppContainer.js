@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import "gun/lib/mobile";
 import Gun from "gun/gun";
 
 import SEA from "gun/sea";
@@ -19,7 +18,6 @@ import { CertProvider } from "../hooks/useCert";
 import { NotificationProvider } from "../hooks/useNotifications";
 import { FriendProvider } from "../hooks/useFriend";
 const linking = {
-
 	prefixes: ["https://vibe.marda.studio", "vibe.marda.studio"],
 	config: {
 		screens: {
@@ -35,11 +33,11 @@ const linking = {
 								},
 							},
 							Room: {
-                screens: {
-                  Rooms: "rooms",
-                  Room: "room/",
-                },
-              },
+								screens: {
+									Rooms: "rooms",
+									Room: "room/",
+								},
+							},
 							Notes: "notes",
 							Games: "games",
 							Tasks: "tasks",
@@ -61,16 +59,16 @@ const linking = {
 	},
 };
 const asyncFn =
-  (fn) =>
-  (...args) => {
-    return new Promise((resolve) => {
-      resolve(fn.call(this, ...args));
-    });
-  };
+	(fn) =>
+	(...args) => {
+		return new Promise((resolve) => {
+			resolve(fn.call(this, ...args));
+		});
+	};
 const storage = {
-  setItem: asyncFn(idb.set.bind(idb)),
-  getItem: asyncFn(idb.get.bind(idb)),
-  removeItem: asyncFn(idb.del.bind(idb)),
+	setItem: asyncFn(idb.set.bind(idb)),
+	getItem: asyncFn(idb.get.bind(idb)),
+	removeItem: asyncFn(idb.del.bind(idb)),
 };
 
 export default function AppContainer({ children }) {
