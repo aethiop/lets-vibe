@@ -11,7 +11,6 @@ Gun.chain.generateCert = async function (who, where, path) {
 	if (who === "*") {
 		user.get(path).put(certificate, ({ ok }) => {
 			if (ok) console.log("Public Request Certificate created");
-			// console.log("Public Request Certificate: ", certificate);
 		});
 	} else {
 		user &&
@@ -55,8 +54,6 @@ Gun.chain.addFriend = async function (pub) {
 			},
 			{ opt: { cert } }
 		);
-
-	// if (cert) {
 };
 
 Gun.chain.acceptFriend = async function (pub) {
@@ -86,27 +83,6 @@ Gun.chain.acceptFriend = async function (pub) {
 			},
 			{ opt: { cert } }
 		);
-	// gun.user(pub)
-	// 	.get("certificates/friends")
-	// 	.get(myPub)
-	// 	.on((cert) => {
-	// 		console.log("FRIEND CERTIFICATE: ", cert);
-	// 		if (cert) {
-	// 			gun.user(pub)
-	// 				.get("friends")
-	// 				.set(
-	// 					myPub,
-	// 					({ err }) => {
-	// 						if (err) {
-	// 							console.log("Error: ", err);
-	// 						} else {
-	// 							user.get("friends").set(pub);
-	// 						}
-	// 					},
-	// 					{ opt: { cert } }
-	// 				);
-	// 		}
-	// 	});
 };
 
 export const getFriends = (gun, pub) => {
@@ -117,30 +93,4 @@ export const getFriends = (gun, pub) => {
 		friendsArray.push(friend);
 	});
 	return friendsArray;
-};
-
-Gun.chain.sendMessage = async function (pub, cert, message) {
-	var user = this;
-	var gun = user.back(-1);
-	var pair = user._.sea;
-	const myPub = user._.sea.pub;
-
-	//TODO: end to end encryption
-
-	gun.user(pub)
-		.get("chats")
-		.get(myPub)
-		.put(
-			{
-				their: {
-					message: message,
-					from: myPub,
-					timeStamp: Gun.state(),
-				},
-			},
-			({ ok }) => {
-				if (ok) console.log("Message sent");
-			},
-			{ opt: { cert } }
-		);
 };

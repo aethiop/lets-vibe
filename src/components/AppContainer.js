@@ -22,12 +22,7 @@ import { NotificationProvider } from "../hooks/useNotifications";
 import { FriendProvider } from "../hooks/useFriend";
 
 const linking = {
-	prefixes: [
-		"http://localhost:19006",
-		"http://localhost:3000",
-		"https://marda.studio",
-		"https://www.marda.studio",
-	],
+	prefixes: ["https://vibe.marda.studio", "vibe.marda.studio"],
 	config: {
 		screens: {
 			Main: {
@@ -79,10 +74,7 @@ export default function AppContainer({ children }) {
 				keyFieldName="vibeKeys"
 				storage={storage}
 				gunOpts={{
-					peers: [
-						"https://marda.herokuapp.com/gun",
-						"http://localhost:8765/gun",
-					],
+					peers: ["https://marda.herokuapp.com/gun"],
 					localStorage: false,
 					rad: false,
 				}}

@@ -36,7 +36,7 @@ export const Container = ({
 		}
 	}, [themeMode]);
 	return (
-		<Box {...props} pt={1}>
+		<Box {...props} mt={2}>
 			<Heading
 				navigation={navigation}
 				name={title}

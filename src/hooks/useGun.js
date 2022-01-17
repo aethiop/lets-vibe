@@ -257,7 +257,6 @@ export const useGunState = (
 	);
 
 	const put = async (data) => {
-		console.lo("Certificate", cert);
 		let encrypted = await encrypt(data, keys, sea);
 		await new Promise((res, rej) => {
 			appGraph.put(

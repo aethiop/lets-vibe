@@ -49,36 +49,29 @@ export default function SettingsScreen({ navigation }) {
 			</HStack>
 			<VStack space={4}>
 				<Center>
-					<Pressable
-						onPress={() =>
-							navigation.navigate("Profile", { pub: keys.pub })
-						}
-					>
-						<Center>
-							<Identity publicKey={keys.pub} size="md" />
-							{!name ? (
-								<Skeleton
-									colorMode={themeMode}
-									height={10}
-									m={2}
-									width={175}
-									startColor={useColorModeValue(
-										"light.100",
-										"#212121"
-									)}
-									endColor={useColorModeValue(
-										"light.300",
-										"#121212"
-									)}
-									borderRadius="full"
-								></Skeleton>
-							) : (
-								<Heading py={4} size="md">
-									{name}
-								</Heading>
+					<Identity publicKey={keys.pub} size="md" />
+					{!name ? (
+						<Skeleton
+							colorMode={themeMode}
+							height={10}
+							m={2}
+							width={175}
+							startColor={useColorModeValue(
+								"light.100",
+								"#121212"
 							)}
-						</Center>
-					</Pressable>
+							endColor={useColorModeValue(
+								"light.300",
+								"dark.100"
+							)}
+							borderRadius="full"
+						></Skeleton>
+					) : (
+						<Heading py={4} size="md">
+							{name}
+						</Heading>
+					)}
+
 					<HStack space={4} justifyContent={"center"}>
 						<PrimaryButton
 							disabled={copyPub}
@@ -144,7 +137,7 @@ export default function SettingsScreen({ navigation }) {
 								justifyContent={"flex-start"}
 							>
 								<DescriptiveText
-									title={"Alias "}
+									title={"Username  "}
 									iconBg={"#9E77F1"}
 									icon={"person"}
 								/>
@@ -198,7 +191,7 @@ export default function SettingsScreen({ navigation }) {
 					onPress={async () => {
 						logout(() => {
 							console.log("Logged out");
-							navigation.navigate("Auth");
+							window.location.assign("/register");
 						});
 					}}
 					px="10"

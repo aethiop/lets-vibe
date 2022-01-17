@@ -14,8 +14,16 @@ const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
 	const { gun, user, keys, isAuthed } = useAuth();
-	const { generateRequestsCertificate } = useFriend();
-	const [notification, setNotification] = useState(null);
+
+	useEffect(async () => {
+		if (isAuthed && keys) {
+			await user.generateCert(
+				"*",
+				{ "*": "notifications" },
+				"certificates/notifications"
+			);
+		}
+	}, [isAuthed]);
 
 	const value = useMemo(() => {
 		return {};
