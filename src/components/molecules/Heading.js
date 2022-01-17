@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Text,
 	HStack,
@@ -12,11 +12,38 @@ import { Identity } from "../atoms/Identity";
 import { useAuth, useGunSetState } from "../../hooks/useGun";
 
 export const Heading = (props) => {
-	const { name, publicKey, notifications, navigation } = props;
+	const { name, publicKey, navigation } = props;
+	const { keys, isAuthed, user, sea } = useAuth();
+	const { list: notifications } = useGunSetState(user.get("notifications"), {
+		interval: 0,
+	});
+	let notificationList = Array.from(notifications.keys()).map((key) => {
+		if (notifications.get(key) && notifications.get(key) !== null) {
+			return {
+				key,
+				pub: Object.values(notifications.get(key))
+					.slice(0, -1)
+					.join(""),
+			};
+		}
+	});
+	useEffect(() => {
+		if (!!notificationList) return;
 
+		notificationList = Array.from(notifications.keys()).map((key) => {
+			if (notifications.get(key) && notifications.get(key) !== null) {
+				return {
+					key,
+					pub: Object.values(notifications.get(key))
+						.slice(0, -1)
+						.join(""),
+				};
+			}
+		});
+	}, []);
 	return (
 		<>
-			<StatusBar backgroundColor="primary.500" barStyle="light-content" />
+			<StatusBar barStyle="light-content" />
 			<HStack
 				px="1"
 				py="3"
@@ -45,7 +72,7 @@ export const Heading = (props) => {
 							icon="notifications-outline"
 							onPress={() => navigation.navigate("Notifications")}
 						/>
-						{notifications && notifications.length > 0 && (
+						{notificationList && notificationList.length > 0 && (
 							<Text
 								position="absolute"
 								top="0"
@@ -56,7 +83,7 @@ export const Heading = (props) => {
 								color={useColorModeValue("white", "black")}
 								fontSize="xs"
 							>
-								{notifications.length}
+								{notificationList.length}
 							</Text>
 						)}
 					</Box>

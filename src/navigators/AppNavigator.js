@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMenuNavigator } from "../components/organisms/MenuNavigator";
-import RoomScreen from "../screens/App/Room/Room";
 import NotesScreen from "../screens/App/Notes/Notes";
 import GameScreen from "../screens/App/Games/Games";
 import LibraryScreen from "../screens/App/Library/Library";
 import TaskScreen from "../screens/App/Tasks/Tasks";
 import { useAuth, useGunSetState } from "../hooks/useGun";
 import { FileSystemProvider } from "../hooks/useFileSystem";
-import Chat from "../screens/App/Chat";
+import RoomNavigation from "./RoomNavigation";
+import Chats from "../screens/App/Chat/Chat";
+const Stack = createNativeStackNavigator();
 
 const MenuNav = createMenuNavigator();
 const LibraryView = (props) => {
@@ -17,6 +19,7 @@ const LibraryView = (props) => {
 		</FileSystemProvider>
 	);
 };
+
 export default function AppNavigation() {
 	const { user, keys } = useAuth();
 
@@ -51,6 +54,15 @@ export default function AppNavigation() {
 				}}
 				initialParams={{
 					path: "/",
+				}}
+			/>
+			<MenuNav.Screen
+				name="Chats"
+				component={Chats}
+				options={{
+					icon: "chatbubble",
+					title: "Chats",
+					pub: keys.pub,
 				}}
 			/>
 

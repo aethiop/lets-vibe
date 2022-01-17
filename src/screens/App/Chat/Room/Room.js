@@ -13,11 +13,14 @@ import {
 	View,
 } from "native-base";
 import React, { useState, useRef, useEffect } from "react";
-import { useAuth, useGunState } from "../../hooks/useGun";
-import ChatHeader from "../../components/molecules/ChatHeader";
-import { Identity } from "../../components/atoms/Identity";
+import { useAuth, useGunState } from "../../../../hooks/useGun";
+import ChatHeader from "../../../../components/molecules/ChatHeader";
+import { Identity } from "../../../../components/atoms/Identity";
 import { KeyboardAvoidingView } from "react-native";
-import { IconButton } from "../../components/atoms/Button";
+import { IconButton } from "../../../../components/atoms/Button";
+import { TextInput } from "../../../../components/atoms/Input";
+import { DescriptiveText } from "../../../../components/molecules/DescriptiveText";
+
 export default function Chat({ navigation, route }) {
 	const { gun, user, keys } = useAuth();
 	const [height, setHeight] = useState("auto");
@@ -36,6 +39,7 @@ export default function Chat({ navigation, route }) {
 		interval: 0,
 		keys: secret,
 	});
+
 	const { fields: theirChat } = useGunState(
 		gun.user(pub).get("chats").get(user.is.pub),
 		{
@@ -44,26 +48,31 @@ export default function Chat({ navigation, route }) {
 		}
 	);
 	const { colorMode, toggleColorMode } = useColorMode();
-
+	const [editing, setEditing] = useState(false);
 	const { text = "" } = myChat;
 	const { text: their } = theirChat;
 	return (
 		<View position="fixed" h="full" w="full" _dark={{ bg: "#121212" }}>
-			<HStack
-				w="full"
-				px="4"
-				py="3"
-				justifyContent="flex-end"
-				alignItems="center"
-			>
-				<HStack justifyContent="flex-end">
+			<VStack py={2} space={2} flex={1}>
+				<HStack
+					w="full"
+					px={5}
+					py={4}
+					alignItems={"center"}
+					justifyContent={"space-between"}
+				>
+					<HStack alignItems={"center"} justifyContent={"flex-start"}>
+						<Text fontSize={"2xl"} fontWeight={"bold"}>
+							{name}
+						</Text>
+					</HStack>
 					<IconButton
-						onPress={() => navigation.goBack()}
 						icon="arrow-back"
+						onPress={() => {
+							navigation.goBack();
+						}}
 					/>
 				</HStack>
-			</HStack>
-			<VStack py={2} space={2} flex={1}>
 				<HStack
 					py={2}
 					px={5}

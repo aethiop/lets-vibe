@@ -46,7 +46,7 @@
     "react-three-fiber": "^6.0.13",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "resonance-audio": "^1.0.0",
-    "text-encoding": "^0.7.0",
+    "text-encoding": "^0.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

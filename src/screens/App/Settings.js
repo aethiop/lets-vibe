@@ -85,7 +85,6 @@ export default function SettingsScreen({ navigation }) {
 							{copyPub ? "Copied!" : "Public Key"}
 						</PrimaryButton>
 						<PrimaryButton
-							disabed={copyPriv}
 							onPress={() => {
 								setCopyPriv(true);
 								Clipboard.setString(JSON.stringify(keys));
@@ -185,6 +184,7 @@ export default function SettingsScreen({ navigation }) {
 				mt={"auto"}
 				px={"4"}
 				py="3"
+				bottom={5}
 				justifyContent={"flex-end"}
 			>
 				<PrimaryButton

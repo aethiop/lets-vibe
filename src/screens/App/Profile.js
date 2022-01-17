@@ -3,6 +3,7 @@ import { HStack, VStack, Center, Heading, ScrollView } from "native-base";
 import { IconButton } from "../../components/atoms/Button";
 import { Identity } from "../../components/atoms/Identity";
 import { useAuth, useGunState } from "../../hooks/useGun";
+import { PrimaryButton } from "../../components/atoms/Button";
 
 export default function ProfileScreen({ navigation, route }) {
 	const { gun, keys, user, logout } = useAuth();
@@ -36,6 +37,19 @@ export default function ProfileScreen({ navigation, route }) {
 						{name}
 					</Heading>
 				</Center>
+				<PrimaryButton
+					mx="auto"
+					px="4"
+					colorScheme="primary"
+					onPress={() => {
+						navigation.navigate("Room", {
+							pub: pubKey,
+						});
+					}}
+					icon={"cube"}
+				>
+					Go to Room
+				</PrimaryButton>
 
 				<VStack
 					flex={1}
