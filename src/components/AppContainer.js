@@ -9,7 +9,10 @@ import "gun/lib/open";
 import "gun/lib/store";
 import "gun/lib/path";
 import "../lib/file-upload";
+
+import "../lib/certificate";
 import "../lib/friend";
+import "../lib/notifications";
 
 import * as idb from "idb-keyval";
 import { GunProvider } from "../hooks/useGun";
@@ -25,26 +28,19 @@ const linking = {
 				screens: {
 					Home: {
 						screens: {
-							Library: "library",
-							Chats: {
-								screens: {
-									Chats: "chats",
-									Chat: "chats/:pub",
-								},
-							},
-							Room: {
-								screens: {
-									Rooms: "rooms",
-									Room: "room/",
-								},
-							},
+							Library: "library/:path",
+							Chats: "chats",
+							Messages: "messages",
 							Notes: "notes",
 							Games: "games",
 							Tasks: "tasks",
 						},
 					},
+					Chat: "chat/:pub",
+					Message: "message/:pub",
 					Settings: "settings",
-					Search: "search",
+					Notifications: "notifications",
+					Friends: "friends",
 					Profile: "profile/:user",
 				},
 			},
@@ -73,7 +69,10 @@ const storage = {
 
 export default function AppContainer({ children }) {
 	return (
-		<NavigationContainer linking={linking}>
+		<NavigationContainer
+			linking={linking}
+			fallback={<Text>Loading...</Text>}
+		>
 			<GunProvider
 				sea={SEA}
 				Gun={Gun}
