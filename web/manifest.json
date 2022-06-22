@@ -1,0 +1,9 @@
+{
+  "description": "Vibe is a peer to peer real time chat platform that brings people together to share their thoughts and feelings.",
+  "display": "standalone",
+  "lang": "en",
+  "name": "Vibe",
+  "short_name": "Vibe",
+  "start_url": ".",
+  "orientation": "portrait"
+}
