@@ -11,7 +11,6 @@ import ProfileScreen from "../screens/App/Profile";
 import RoomScreen from "../screens/App/LiveChat/Room/Room";
 import Error404 from "../screens/404";
 import { ThemeContainer } from "../components/ThemeContainer";
-import StorybookUIRoot from "../../storybook";
 const Stack = createNativeStackNavigator();
 
 const Storybook = () => {
