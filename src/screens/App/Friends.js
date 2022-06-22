@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Center, Box, VStack, HStack, Icon } from "native-base";
+import { Center, Box, VStack, HStack, Text } from "native-base";
 import { TextInput } from "../../components/atoms/Input";
 import { IconButton, PrimaryButton } from "../../components/atoms/Button";
 // import { sendFriendRequest } from "../../hooks/useFriend";
@@ -19,7 +19,9 @@ export default function FriendScreen({ navigation }) {
 	});
 	const { list: suggestions, addToSet: addSuggestion } = useGunSetState(
 		user.get("suggestions"),
-		{}
+		{
+			interval: 300,
+		}
 	);
 
 	// const [friends, setFriends] = useState({});
@@ -30,18 +32,6 @@ export default function FriendScreen({ navigation }) {
 			pub: Object.values(friends.get(key)).slice(0, -1).join(""),
 		};
 	});
-	const pubList = friendList.map(({ pub }) => pub);
-	const createChatRoom = async (friendPub) => {
-		if (!(await user.get("certificates/chats").get(friendPub))) {
-		}
-		const chatCert = await user.get("certificates/chats").get(friendPub);
-		return chatCert;
-	};
-	const f = friendList
-		.map((friend) => getFriends(gun, friend.pub))
-		.flat()
-		.filter((f) => !pubList.includes(f))
-		.filter((f) => f !== user.is.pub);
 
 	return (
 		<VStack pt={3} space={4} _dark={{ bg: "#121212" }} flex={1}>
@@ -52,7 +42,9 @@ export default function FriendScreen({ navigation }) {
 				alignItems={"center"}
 				justifyContent={"space-between"}
 			>
-				<Center w={["85%", "90%"]}></Center>
+				<Text fontSize="2xl" fontWeight="bold">
+					Friends
+				</Text>
 				<IconButton
 					icon="arrow-back"
 					onPress={() => {
@@ -60,18 +52,18 @@ export default function FriendScreen({ navigation }) {
 					}}
 				/>
 			</HStack>
-			<VStack flex={1} space={4}>
+			<VStack flex={1} space={1}>
 				<AddFriend isOpen={isOpen} hideModal={() => setIsOpen(false)} />
 				{friendList.map((friend) => {
 					return (
 						<Pressable
+							my="2"
+							py="2"
 							key={friend.key}
 							onPress={async () => {
-								const cert = await createChatRoom(friend.pub);
 								navigation.navigate("Profile", {
 									room: friend.key,
 									pub: friend.pub,
-									cert: cert,
 								});
 							}}
 						>

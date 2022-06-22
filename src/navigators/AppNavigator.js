@@ -8,7 +8,7 @@ import TaskScreen from "../screens/App/Tasks/Tasks";
 import { useAuth, useGunSetState } from "../hooks/useGun";
 import { FileSystemProvider } from "../hooks/useFileSystem";
 import RoomNavigation from "./RoomNavigation";
-import Chats from "../screens/App/Chat/Chat";
+import Chats from "../screens/App/LiveChat/Chat";
 const Stack = createNativeStackNavigator();
 
 const MenuNav = createMenuNavigator();
@@ -24,12 +24,12 @@ export default function AppNavigation() {
 	const { keys } = useAuth();
 	return (
 		<MenuNav.Navigator
-			initialRouteName="Room"
+			initialRouteName="Chats"
 			screenOptions={{
 				headerShown: false,
 			}}
 		>
-			<MenuNav.Screen
+			{/* <MenuNav.Screen
 				name="Rooms"
 				component={RoomNavigation}
 				options={{
@@ -37,7 +37,25 @@ export default function AppNavigation() {
 					title: "Rooms",
 					pub: keys.pub,
 				}}
+			/> */}
+			<MenuNav.Screen
+				name="Chats"
+				component={Chats}
+				options={{
+					icon: "chatbubble",
+					title: "Live Chat",
+					pub: keys.pub,
+				}}
 			/>
+			{/* <MenuNav.Screen
+				name="Messages"
+				component={Chats}
+				options={{
+					icon: "chatbox",
+					title: "Messages",
+					pub: keys.pub,
+				}}
+			/> */}
 			<MenuNav.Screen
 				name="Library"
 				component={LibraryView}
@@ -48,15 +66,6 @@ export default function AppNavigation() {
 				}}
 				initialParams={{
 					path: "/",
-				}}
-			/>
-			<MenuNav.Screen
-				name="Chats"
-				component={Chats}
-				options={{
-					icon: "chatbubble",
-					title: "Chats",
-					pub: keys.pub,
 				}}
 			/>
 		</MenuNav.Navigator>

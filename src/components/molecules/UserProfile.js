@@ -20,7 +20,7 @@ export const UserProfile = ({ navigation, children, publicKey }) => {
 		}
 	);
 
-	const { name } = profile;
+	const { name, color } = profile;
 	return (
 		<HStack
 			mx={4}
@@ -31,7 +31,7 @@ export const UserProfile = ({ navigation, children, publicKey }) => {
 			rounded="2xl"
 			p={4}
 		>
-			<Identity publicKey={publicKey} size={7} />
+			<Identity publicKey={publicKey} size={7} bg={color} />
 			<VStack>
 				<Text fontSize="lg" fontWeight={"bold"}>
 					{name}

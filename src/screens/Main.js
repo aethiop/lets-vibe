@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 export default function Main() {
 	const { isAuthed } = useAuth();
 	return (
-		<Stack.Navigator name="Root">
+		<Stack.Navigator>
 			{isAuthed ? (
 				<Stack.Screen
 					options={{ headerShown: false }}

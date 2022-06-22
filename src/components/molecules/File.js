@@ -9,10 +9,12 @@ import { IconButton } from "../atoms/Button";
 import { DescriptiveText } from "./DescriptiveText";
 import { useGunState, useAuth } from "../../hooks/useGun";
 import { formatBytes, uriToFile } from "../../hooks/useFileSystem";
+import { AudioPlayer } from "./AudioPlayer";
 export const File = (props) => {
 	const { user } = useAuth();
 	const { soul, icon, iconColor } = props;
 	const [isOpen, setOpen] = React.useState(false);
+	const [fileObj, setFileObj] = React.useState(null);
 	const [onEdit, setEdit] = React.useState(false);
 	const {
 		fields: file,
@@ -24,44 +26,53 @@ export const File = (props) => {
 		path,
 		parent,
 		parentPath,
+		type,
+		mimeType,
 		proof,
 		size,
 		pub,
 		progress,
 		status,
 	} = file;
+
 	const download = () => {
 		put({ status: "downloading" });
+
 		user.get("dir")
 			.get(soul)
 			.get("data")
 			.download(proof, size, async (pr, file) => {
 				if (pr && pr <= 100) put({ progress: pr });
 				if (pr === 100) {
+					setFileObj(file);
 					put({ progress: null });
 				}
-				if (!!file) {
-					const fileUri = await uriToFile(file);
-					var link = document.createElement("a");
-					link.href = window.URL.createObjectURL(fileUri);
-					link.download = name;
-					link.click();
-					window.URL.revokeObjectURL(link.href);
-					setOpen(false);
-				}
+				// if (!!file) {
+				// 	const fileUri = await uriToFile(file);
+				// 	var link = document.createElement("a");
+				// 	link.href = window.URL.createObjectURL(fileUri);
+				// 	link.download = name;
+				// 	link.click();
+				// 	window.URL.revokeObjectURL(link.href);
+				// 	setOpen(false);
+				// 	put({ status: "uploaded" });
+				// }
 			});
 	};
 
 	return (
 		<>
-			<Card
-				icon={props.icon}
-				iconColor={props.iconColor}
-				onPress={() => {}}
-				onLongPress={() => setOpen(true)}
-			>
-				{name}
-			</Card>
+			{!fileObj && (
+				<Card
+					icon={props.icon}
+					iconColor={props.iconColor}
+					onPress={() => {}}
+					onLongPress={() => setOpen(true)}
+				>
+					{name}
+				</Card>
+			)}
+
 			<Modal isOpen={isOpen} hideModal={() => setOpen(false)}>
 				<Center py={2} px={2}>
 					<DescriptiveText

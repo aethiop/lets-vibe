@@ -8,8 +8,19 @@ import AppNavigation from "./AppNavigator";
 import FriendScreen from "../screens/App/Friends";
 import NotificationScreen from "../screens/App/Notifications";
 import ProfileScreen from "../screens/App/Profile";
-import RoomScreen from "../screens/App/Chat/Room/Room";
+import RoomScreen from "../screens/App/LiveChat/Room/Room";
+import Error404 from "../screens/404";
+import { ThemeContainer } from "../components/ThemeContainer";
+import StorybookUIRoot from "../../storybook";
 const Stack = createNativeStackNavigator();
+
+const Storybook = () => {
+	return (
+		<ThemeContainer>
+			<StorybookUIRoot />
+		</ThemeContainer>
+	);
+};
 
 export default function MainNavigation() {
 	return (
@@ -19,13 +30,16 @@ export default function MainNavigation() {
 				animationEnabled: false,
 			}}
 		>
+			{/* <Stack.Screen name="Storybook" component={Storybook} /> */}
 			<Stack.Screen name="Home" component={AppNavigation} />
 			<Stack.Screen name="Profile" component={ProfileScreen} />
-			<Stack.Screen name="Room" component={RoomScreen} />
+
+			<Stack.Screen name="Chat" component={RoomScreen} />
 			<Stack.Screen name="Search" component={SearchScreen} />
 			<Stack.Screen name="Settings" component={SettingsScreen} />
 			<Stack.Screen name="Friends" component={FriendScreen} />
 			<Stack.Screen name="Notifications" component={NotificationScreen} />
+			<Stack.Screen name="Error" component={Error404} />
 		</Stack.Navigator>
 	);
 }

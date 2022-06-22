@@ -32,9 +32,46 @@ export const NotificationProvider = ({ children }) => {
 		}
 	}, [isAuthed]);
 
+	//  sendNotifications("examplepub", { inbox: "notifications", data: pub} );)})
+	const sendNotification = async (pub, message) => {
+		const notifyCert = await gun
+			.user(pub)
+			.get("certificates/notifications");
+		console.log("NOTIFY CERT: ", notifyCert);
+		const inbox = gun.user(pub).get(message.inbox);
+		inbox.set(
+			message.data,
+			({ err }) => {
+				if (err) {
+					console.log("Error: ", err);
+				} else {
+					gun.user(pub)
+						.get("notify")
+						.get("enabled")
+						.put(true, null, { opt: { cert: notifyCert } });
+					user.generateCert(
+						pub,
+						{ "*": "friends" },
+						"certificates/friends"
+					);
+					user.generateCert(
+						pub,
+						{ "*": "chats" },
+						"certificates/chats"
+					);
+
+					console.log("Request sent");
+				}
+			},
+			{ opt: { cert: notifyCert } }
+		);
+	};
+
 	const value = useMemo(() => {
-		return {};
-	}, []);
+		return {
+			sendNotification,
+		};
+	}, [user, keys, sendNotification]);
 	return (
 		<NotificationContext.Provider value={value}>
 			{children}

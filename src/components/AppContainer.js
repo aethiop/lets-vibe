@@ -37,6 +37,7 @@ const linking = {
 						},
 					},
 					Chat: "chat/:pub",
+					Storybook: "storybook",
 					Message: "message/:pub",
 					Settings: "settings",
 					Notifications: "notifications",
@@ -79,7 +80,7 @@ export default function AppContainer({ children }) {
 				keyFieldName="vibeKeys"
 				storage={storage}
 				gunOpts={{
-					peers: ["https://marda.herokuapp.com/gun"],
+					peers: ["http://localhost:8765/gun"],
 					localStorage: false,
 					rad: false,
 				}}

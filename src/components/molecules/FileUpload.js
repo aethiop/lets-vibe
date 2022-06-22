@@ -33,6 +33,7 @@ export const FileUpload = ({ isOpen, currentPath, hideModal }) => {
 			p && fileNode.get("progress").put(p);
 		});
 		setFileSelected(null);
+		hideModal();
 	};
 	return (
 		<Modal isOpen={isOpen} hideModal={hideModal}>

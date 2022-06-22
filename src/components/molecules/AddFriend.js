@@ -5,16 +5,30 @@ import { TextInput } from "../atoms/Input";
 import { PrimaryButton } from "../atoms/Button";
 import { useAuth, useGunSetState, useUser } from "../../hooks/useGun";
 
+import { useNotification } from "../../hooks/useNotifications";
+import Gun from "gun/gun";
+
 export const AddFriend = (props) => {
-	const { user, keys, gun, sea } = useAuth();
-	const { list: notifications } = useGunSetState(
-		user.get("notifications"),
-		{}
-	);
+	const { gun, user } = useAuth();
 	const [pub, setPub] = useState("");
-	// const { sendRequest } = useFriend();
+
 	const sendRequest = async (pub) => {
-		user.addFriend(pub);
+		// Send Friend Request
+
+		user.sendNotification(pub, {
+			data: user.is.pub,
+			type: "friend-request",
+			createdAt: Gun.state(),
+		});
+		user.notify(pub, true);
+		user.generateCert(pub, { "*": "friends" }, "certificates/friends");
+
+		// await gun.notify(pub);
+		// user.addFriend(pub);x
+		// user.sendNotification(pub, {
+		// 	data: pub,
+		// 	type: "friend-request",
+		// });
 		props.hideModal();
 	};
 

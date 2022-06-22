@@ -3,7 +3,6 @@ import { Input, Icon, useColorModeValue } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
 const TextInput = (props) => {
-
 	return (
 		<Input
 			{...props}
@@ -15,9 +14,9 @@ const TextInput = (props) => {
 			bg={useColorModeValue("light.300", "dark.200")}
 			InputLeftElement={
 				<Icon
-					as={<Ionicons name={props.icon} size="sm" />}
+					as={<Ionicons name={props.icon} />}
 					size="sm"
-					px={3}
+					px={2}
 					mr={2}
 					color={useColorModeValue("light.400", "dark.400")}
 				/>

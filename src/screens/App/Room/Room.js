@@ -1,5 +1,5 @@
 import { VStack, Text, Center, HStack } from "native-base";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { ColoredIcon } from "../../../components/atoms/Icon";
 import { IconButton, PrimaryButton } from "../../../components/atoms/Button";
 import { Modal } from "../../../components/atoms/Modal";
@@ -20,6 +20,8 @@ export default function Room({ navigation }) {
 		setShowModal(false);
 	};
 
+	
+
 	return (
 		<>
 			<VStack
@@ -33,10 +35,11 @@ export default function Room({ navigation }) {
 				<ShowRooms roomValues={roomValues} navigation={navigation} />
 				{/* </Center> */}
 				<HStack justifyContent="flex-end" p={3}>
-					<PrimaryButton
+					<IconButton
 						onPress={() => {
 							setShowModal(true);
 						}}
+						icon="add-circle"
 					/>
 					<Modal
 						isOpen={showModal}

@@ -13,13 +13,17 @@ import { Identity } from "../atoms/Identity";
 import { useAuth, useGunState } from "../../hooks/useGun";
 
 export const Heading = (props) => {
-	const { name, publicKey, navigation } = props;
+	const { publicKey, navigation } = props;
 	const { user } = useAuth();
 	const { fields: notify, put } = useGunState(user.get("notify"), {
 		interval: 0,
 	});
+	const { fields: profile, put: setProfile } = useGunState(
+		user.get("profile"),
+		{}
+	);
+	const { color } = profile;
 	const { enabled } = notify;
-	console.log("Notified", enabled);
 	return (
 		<>
 			<StatusBar barStyle="light-content" />
@@ -31,17 +35,13 @@ export const Heading = (props) => {
 			>
 				<Pressable onPress={() => navigation.navigate("Settings")}>
 					<HStack alignItems="center" px="5" space={4}>
-						<Identity publicKey={publicKey} size="xs" />
+						<Identity publicKey={publicKey} size="xs" bg={color} />
 						<Text fontSize="20" fontWeight="bold">
 							{name}
 						</Text>
 					</HStack>
 				</Pressable>
 				<HStack px="4" space={2}>
-					<IconButton
-						onPress={() => navigation.push("Search")}
-						icon="search-outline"
-					/>
 					<IconButton
 						icon="people-outline"
 						onPress={() => navigation.push("Friends")}

@@ -12,7 +12,7 @@ export default function ProfileScreen({ navigation, route }) {
 	const { fields: profile } = useGunState(gun.user(pubKey).get("profile"), {
 		interval: 10,
 	});
-	const { name, themeMode } = profile;
+	const { name, themeMode, color } = profile;
 	console.log(name);
 	// const { name = "", themeMode } = profile;
 	console.log(themeMode);
@@ -27,7 +27,7 @@ export default function ProfileScreen({ navigation, route }) {
 			</HStack>
 			<VStack space={4}>
 				<Center>
-					<Identity publicKey={pubKey} size="md" />
+					<Identity publicKey={pubKey} size="md" bg={color} />
 					<Heading py={4} size="md">
 						{name}
 					</Heading>
@@ -37,7 +37,7 @@ export default function ProfileScreen({ navigation, route }) {
 					px="4"
 					colorScheme="primary"
 					onPress={() => {
-						navigation.navigate("Room", {
+						navigation.navigate("Chat", {
 							pub: pubKey,
 						});
 					}}
