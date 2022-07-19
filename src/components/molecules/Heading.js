@@ -22,14 +22,15 @@ export const Heading = (props) => {
 		user.get("profile"),
 		{}
 	);
-	const { color } = profile;
+	const { name, color } = profile;
 	const { enabled } = notify;
 	return (
 		<>
 			<StatusBar barStyle="light-content" />
 			<HStack
 				px="1"
-				py="3"
+				py="4"
+				mt="2"
 				justifyContent="space-between"
 				alignItems="center"
 			>
@@ -41,12 +42,12 @@ export const Heading = (props) => {
 						</Text>
 					</HStack>
 				</Pressable>
-				<HStack px="4" space={2}>
+				<HStack>
 					<IconButton
 						icon="people-outline"
 						onPress={() => navigation.push("Friends")}
 					/>
-					<Box flex={1}>
+					<Box>
 						<IconButton
 							icon="notifications-outline"
 							onPress={() => {

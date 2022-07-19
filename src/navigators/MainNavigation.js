@@ -13,14 +13,6 @@ import Error404 from "../screens/404";
 import { ThemeContainer } from "../components/ThemeContainer";
 const Stack = createNativeStackNavigator();
 
-const Storybook = () => {
-	return (
-		<ThemeContainer>
-			<StorybookUIRoot />
-		</ThemeContainer>
-	);
-};
-
 export default function MainNavigation() {
 	return (
 		<Stack.Navigator

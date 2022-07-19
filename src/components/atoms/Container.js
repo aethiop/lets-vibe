@@ -3,7 +3,7 @@ import { Box, useColorMode } from "native-base";
 import { Heading } from "../molecules/Heading";
 import { useAuth, useGunState, useGunSetState } from "../../hooks/useGun";
 import { Platform } from "react-native";
-import useNetwork from "../../hooks/useNetwork";
+// import useNetwork from "../../hooks/useNetwork";
 
 export const Container = ({
 	title,
@@ -24,7 +24,7 @@ export const Container = ({
 	);
 
 	const { themeMode } = profile;
-	const networkState = useNetwork();
+	// const networkState = useNetwork();
 
 	useLayoutEffect(() => {
 		if (themeMode && themeMode !== colorMode) {

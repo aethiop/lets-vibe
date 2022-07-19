@@ -9,7 +9,7 @@ import { IconButton } from "../atoms/Button";
 import { DescriptiveText } from "./DescriptiveText";
 import { useGunState, useAuth } from "../../hooks/useGun";
 import { formatBytes, uriToFile } from "../../hooks/useFileSystem";
-import { AudioPlayer } from "./AudioPlayer";
+// import { AudioPlayer } from "./AudioPlayer";
 export const File = (props) => {
 	const { user } = useAuth();
 	const { soul, icon, iconColor } = props;

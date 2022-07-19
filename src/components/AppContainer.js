@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { Text } from "native-base";
 import Gun from "gun/gun";
 
 import SEA from "gun/sea";
@@ -9,12 +10,11 @@ import "gun/lib/open";
 import "gun/lib/store";
 import "gun/lib/path";
 import "../lib/file-upload";
-
 import "../lib/certificate";
 import "../lib/friend";
 import "../lib/notifications";
 
-import * as idb from "idb-keyval";
+import { storage } from "../lib/storage";
 import { GunProvider } from "../hooks/useGun";
 import { ThemeContainer } from "./ThemeContainer";
 import { CertProvider } from "../hooks/useCert";
@@ -62,17 +62,11 @@ const asyncFn =
 			resolve(fn.call(this, ...args));
 		});
 	};
-const storage = {
-	setItem: asyncFn(idb.set.bind(idb)),
-	getItem: asyncFn(idb.get.bind(idb)),
-	removeItem: asyncFn(idb.del.bind(idb)),
-};
-
 export default function AppContainer({ children }) {
 	return (
 		<NavigationContainer
 			linking={linking}
-			fallback={<Text>Loading...</Text>}
+			// fallback={<Text>Loading...</Text>}
 		>
 			<GunProvider
 				sea={SEA}

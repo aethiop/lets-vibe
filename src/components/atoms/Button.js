@@ -9,7 +9,6 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
-
 // Primary Button
 const PrimaryButton = (props) => {
 	const { colorMode } = useColorMode();
@@ -83,7 +82,7 @@ const IconButton = (props) => {
 			icon={
 				<Icon
 					as={<Ionicons name={props.icon} />}
-					size="sm"
+					size="md"
 					color={props.color}
 				/>
 			}

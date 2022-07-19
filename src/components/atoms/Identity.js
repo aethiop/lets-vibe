@@ -6,12 +6,12 @@ import { SvgXml } from "react-native-svg";
 import Gun from "gun/gun";
 import { Center, Image } from "native-base";
 import { useUser, useAuth, useGunState } from "../../hooks/useGun";
-import { useTheme } from "@react-navigation/native";
+// import { useTheme } from "@react-navigation/native";
 export const Identity = ({ publicKey, size, bg }) => {
 	const { gun } = useAuth();
 	const user = useUser(gun, publicKey);
-	const { colorMode } = useTheme();
-	var url = `https://vibatar.herokuapp.com/4.x/big-smile/png?seed=${publicKey}`;
+	// const { colorMode } = useTheme();
+	var url = `https://vibatar.herokuapp.com/4.x/identicon/png?seed=${publicKey}`;
 	var colors = {
 		purple: "primary.500",
 		blue: "blue.500",

@@ -27,7 +27,7 @@ import { TextInput } from "../../components/atoms/Input";
 import { Accordion } from "../../components/atoms/Accordion";
 import { DescriptiveText } from "../../components/molecules/DescriptiveText";
 import * as Clipboard from "expo-clipboard";
-import useNetwork from "../../hooks/useNetwork";
+// import useNetwork from "../../hooks/useNetwork";
 
 export default function SettingsScreen({ navigation }) {
 	const { keys, sea, user, logout } = useAuth();
@@ -40,7 +40,8 @@ export default function SettingsScreen({ navigation }) {
 	const { fields: profile, put } = useGunState(user.get("profile"), {
 		interval: 0,
 	});
-	const { name = "", themeMode, color } = profile;
+	const { name, themeMode, color } = profile;
+	const [username, setUsername] = useState("");
 
 	var colors = [
 		{
@@ -93,78 +94,8 @@ export default function SettingsScreen({ navigation }) {
 			</HStack>
 			<VStack space={4} flex={1}>
 				<Center>
-					<Pressable onPress={() => setShowColors(!showColor)}>
-						<Identity publicKey={keys.pub} size="md" bg={color} />
-					</Pressable>
+					<Identity publicKey={keys.pub} size="md" bg={color} />
 
-					<Stagger
-						flex={1}
-						visible={showColor}
-						initial={{
-							opacity: 0,
-							scale: 0,
-						}}
-						animate={{
-							scale: 1,
-							opacity: 1,
-							transition: {
-								type: "spring",
-								mass: 0.8,
-								stagger: {
-									offset: 30,
-									reverse: true,
-								},
-							},
-						}}
-						exit={{
-							scale: 0.8,
-							opacity: 0,
-							transition: {
-								duration: 100,
-								stagger: {
-									offset: 30,
-									reverse: true,
-								},
-							},
-						}}
-					>
-						<ScrollView
-							horizontal={true}
-							overflowX={"hidden"}
-							showsHorizontalScrollIndicator={false}
-							style={{
-								paddingHorizontal: 10,
-								flex: 1,
-							}}
-						>
-							{colors.map((colors, index) => {
-								return (
-									<Pressable
-										borderWidth={1}
-										borderColor={
-											color === colors.name &&
-											themeMode === "dark"
-												? "light.300"
-												: "dark.100"
-										}
-										px={2}
-										mx={2}
-										my={4}
-										w={7}
-										h={7}
-										rounded={"2xl"}
-										bg={colors.color}
-										key={colors.name + index}
-										onPress={() => {
-											put({
-												color: colors.name,
-											});
-										}}
-									></Pressable>
-								);
-							})}
-						</ScrollView>
-					</Stagger>
 					{!name ? (
 						<Skeleton
 							colorMode={themeMode}
@@ -227,13 +158,18 @@ export default function SettingsScreen({ navigation }) {
 								autoCorrect={false}
 								placeholder="Name"
 								icon="person"
-								onChangeText={(text) => put({ name: text })}
-								value={name}
+								onChangeText={(text) => setUsername(text)}
+								value={username}
 								autoFocus
 								onBlur={() => setEditing(false)}
 							/>
 							<IconButton
-								onPress={() => setEditing(false)}
+								onPress={() => {
+									setEditing(false);
+									console.log("put", username);
+									put({ name: username });
+									setUsername("");
+								}}
 								icon="checkmark"
 							/>
 						</HStack>

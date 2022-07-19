@@ -24,6 +24,7 @@
     "expo-file-system": "^13.1.0",
     "expo-gl": "^11.1.1",
     "expo-pwa": "^0.0.111",
+    "expo-secure-store": "^11.2.0",
     "expo-status-bar": "~1.2.0",
     "file-saver": "^2.0.5",
     "gun": "amark/gun",
